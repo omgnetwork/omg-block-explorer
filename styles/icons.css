@@ -1,0 +1,222 @@
+@font-face {
+    font-family: 'icomoon';
+    src: url('../statics/fonts/icomoon.eot?18jbwu');
+    src: url('../statics/fonts/icomoon.eot?18jbwu#iefix') format('embedded-opentype'), url('../statics/fonts/icomoon.ttf?18jbwu') format('truetype'), url('../statics/fonts/icomoon.woff?18jbwu') format('woff'), url('../statics/fonts/icomoon.svg?18jbwu#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-omisego_Face-ID:before {
+    content: "\e930";
+}
+
+.icon-omisego_Touch-ID:before {
+    content: "\e931";
+}
+
+.icon-omisego_Arrow-Down:before {
+    content: "\e900";
+}
+
+.icon-omisego_Arrow-Up:before {
+    content: "\e901";
+}
+
+.icon-omisego_Arrow-Long-Down:before {
+    content: "\e902";
+}
+
+.icon-omisego_Arrow-Long-Left:before {
+    content: "\e903";
+}
+
+.icon-omisego_Arrow-Long-Right:before {
+    content: "\e92e";
+}
+
+.icon-omisego_Arrow-Long-Up:before {
+    content: "\e92f";
+}
+
+.icon-omisego_More:before {
+    content: "\e92c";
+}
+
+.icon-omisego_Topup:before {
+    content: "\e92d";
+}
+
+.icon-omisego_Help:before {
+    content: "\e916";
+}
+
+.icon-omisego_Warning:before {
+    content: "\e928";
+}
+
+.icon-omisego_Info:before {
+    content: "\e92a";
+}
+
+.icon-omisego_Request2:before {
+    content: "\e929";
+}
+
+.icon-omisego_Consumption2:before {
+    content: "\e92b";
+}
+
+.icon-omisego_Pie-chart:before {
+    content: "\e925";
+}
+
+.icon-omisego_Portfolio:before {
+    content: "\e926";
+}
+
+.icon-omisego_QR:before {
+    content: "\e927";
+}
+
+.icon-omisego_Time:before {
+    content: "\e924";
+}
+
+.icon-omisego_Calendar:before {
+    content: "\e904";
+}
+
+.icon-omisego_Camera:before {
+    content: "\e905";
+}
+
+.icon-omisego_Checkmark:before {
+    content: "\e906";
+}
+
+.icon-omisego_Chevron-Down:before {
+    content: "\e907";
+}
+
+.icon-omisego_Chevron-Left:before {
+    content: "\e908";
+}
+
+.icon-omisego_Chevron-Right:before {
+    content: "\e909";
+}
+
+.icon-omisego_Chevron-Up:before {
+    content: "\e90a";
+}
+
+.icon-omisego_Close:before {
+    content: "\e90b";
+}
+
+.icon-omisego_Copy:before {
+    content: "\e90c";
+}
+
+.icon-omisego_Credit:before {
+    content: "\e90d";
+}
+
+.icon-omisego_Dashboard:before {
+    content: "\e90e";
+}
+
+.icon-omisego_Debit:before {
+    content: "\e90f";
+}
+
+.icon-omisego_Download:before {
+    content: "\e910";
+}
+
+.icon-omisego_Edit:before {
+    content: "\e911";
+}
+
+.icon-omisego_Export:before {
+    content: "\e912";
+}
+
+.icon-omisego_Filter:before {
+    content: "\e913";
+}
+
+.icon-omisego_History:before {
+    content: "\e914";
+}
+
+.icon-omisego_Image:before {
+    content: "\e915";
+}
+
+.icon-omisego_Key:before {
+    content: "\e917";
+}
+
+.icon-omisego_Merchant:before {
+    content: "\e918";
+}
+
+.icon-omisego_Option-Horizontal:before {
+    content: "\e919";
+}
+
+.icon-omisego_Option-Vertical:before {
+    content: "\e91a";
+}
+
+.icon-omisego_People:before {
+    content: "\e91b";
+}
+
+.icon-omisego_Plus:before {
+    content: "\e91c";
+}
+
+.icon-omisego_Profile:before {
+    content: "\e91d";
+}
+
+.icon-omisego_Search:before {
+    content: "\e91e";
+}
+
+.icon-omisego_Setting:before {
+    content: "\e91f";
+}
+
+.icon-omisego_Token:before {
+    content: "\e920";
+}
+
+.icon-omisego_Transaction:before {
+    content: "\e921";
+}
+
+.icon-omisego_Upload:before {
+    content: "\e922";
+}
+
+.icon-omisego_Wallet:before {
+    content: "\e923";
+}

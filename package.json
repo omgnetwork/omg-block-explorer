@@ -1,0 +1,46 @@
+{
+  "name": "omg-block-explorer",
+  "version": "1.0.0",
+  "description": "a mysterious place where you can see transactions data.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -w ./server ./server/index.js",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omisego/omg-block-explorer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omisego/omg-block-explorer/issues"
+  },
+  "homepage": "https://github.com/omisego/omg-block-explorer#readme",
+  "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "axios": "^0.18.0",
+    "babel-eslint": "^10.0.1",
+    "body-parser": "^1.18.3",
+    "eslint-config-standard-jsx": "^6.0.2",
+    "eslint-plugin-react": "^7.11.1",
+    "express": "^4.16.4",
+    "next": "^7.0.1",
+    "next-images": "^1.0.1",
+    "nodemon": "^1.18.4",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "styled-components": "^4.0.0"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.8.0",
+    "eslint": "^5.6.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0"
+  }
+}
