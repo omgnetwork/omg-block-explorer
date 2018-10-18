@@ -1,10 +1,4 @@
-import axios from 'axios'
-import CONFIG from '../config'
-import { handleError, handleResponse } from '../utils/responseHandler'
-const instance = axios.create({
-  baseURL: CONFIG.WATCHER_URL,
-  timeout: 1000
-})
+import { instance, handleError, handleResponse } from './apiClientService'
 
 export function getTransactionById (transactionId) {
   return instance

@@ -1,3 +1,6 @@
+import axios from 'axios'
+import CONFIG from '../config'
+
 export function handleResponse (response) {
   return { success: response.data.result === 'success', data: response.data.data }
 }
@@ -11,3 +14,8 @@ export function handleError (error) {
     return { success: false, error: error.message }
   }
 }
+
+export const instance = axios.create({
+  baseURL: CONFIG.WATCHER_URL,
+  timeout: 1000
+})

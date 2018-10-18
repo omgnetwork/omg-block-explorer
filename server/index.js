@@ -35,5 +35,5 @@ server.listen(PORT, err => {
 })
 
 function handleUnexpectedError (error, req, res, next) {
-  res.status(500).send({ success: false, data: error.message })
+  res.status(500).send({ success: false, error: error.message })
 }
