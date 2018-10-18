@@ -103,9 +103,13 @@ const StyledCardHeader = styled(CardHeader)`
   }
 `
 const Error = styled.div`
-  font-size: 32px;
+  font-size: calc(32px + 1.5vw);
   text-align: center;
-  margin-top: 100px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
 `
 const columns = [
   {
