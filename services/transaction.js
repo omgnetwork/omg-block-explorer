@@ -2,7 +2,7 @@ import axios from 'axios'
 import CONFIG from '../config'
 
 const instance = axios.create({
-  baseURL: CONFIG.API_URL,
+  baseURL: typeof window !== 'undefined' ? '/api' : CONFIG.API_URL,
   timeout: 1000
 })
 

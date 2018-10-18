@@ -9,6 +9,7 @@ import Table from '../components/Table'
 import Link from 'next/link'
 import { truncateId } from '../utils/truncate'
 import { getTransactionById } from '../services/transaction'
+import _ from 'lodash'
 const Container = styled.div`
   max-width: 70%;
   margin: 50px auto 0 auto;
@@ -130,7 +131,7 @@ export default class transaction extends Component {
       const tx = await getTransactionById(context.query.id)
       return { tx: tx.data }
     } catch (err) {
-      return { error: 'tx not found or something is wrong!' }
+      return { error: _.get(err, 'response.statusCode') || 'tx not found or something is wrong!' }
     }
   }
   renderTableCard () {
