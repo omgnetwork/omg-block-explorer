@@ -124,14 +124,15 @@ const columns = [
 ]
 export default class transaction extends Component {
   static propTypes = {
-    tx: PropTypes.object
+    tx: PropTypes.object,
+    error: PropTypes.any
   }
   static async getInitialProps (context) {
     try {
       const tx = await getTransactionById(context.query.id)
       return { tx: tx.data }
     } catch (err) {
-      return { error: _.get(err, 'response.statusCode') || 'tx not found or something is wrong!' }
+      return { error: _.get(err, 'response.data.data.description') || _.get(err, 'response.statusText') || 'something is wrong!' }
     }
   }
   renderTableCard () {
@@ -240,7 +241,7 @@ export default class transaction extends Component {
             {this.renderFooter()}
           </Fragment>
         ) : (
-          <Error>tx not found or something is wrong!</Error>
+          <Error>{this.props.error}</Error>
         )}
       </Container>
     )

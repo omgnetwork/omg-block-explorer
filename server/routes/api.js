@@ -10,8 +10,7 @@ router.get('/transaction/:id', async (req, res) => {
     const result = await getTransactionById(req.params.id)
     res.send(result.data)
   } catch (error) {
-    console.log(error)
-    res.status(500).send('Something is wrong internally.')
+    res.status(error.response.status || 500).send(error.response.data)
   }
 })
 
