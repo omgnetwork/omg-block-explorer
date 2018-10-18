@@ -1,4 +1,21 @@
 {
-  "presets": ["next/babel"],
-  "plugins": ["babel-plugin-styled-components"]
+  "env": {
+    "development": {
+      "presets": ["next/babel"],
+      "plugins": ["babel-plugin-styled-components"]
+    },
+    "production": {
+      "presets": [
+        "next/babel",
+        [
+          "@babel/env",
+          {
+            "targets": {
+              "node": "8"
+            }
+          }
+        ]
+      ]
+    }
+  }
 }
