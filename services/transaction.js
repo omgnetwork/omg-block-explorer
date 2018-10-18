@@ -6,6 +6,6 @@ const instance = axios.create({
   timeout: 1000
 })
 
-export function getTransactionById(transactionId) {
+export function getTransactionById (transactionId) {
   return instance.get(`/transaction/${transactionId}`)
 }

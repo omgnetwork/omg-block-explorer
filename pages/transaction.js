@@ -108,6 +108,9 @@ const columns = [
   }
 ]
 export default class transaction extends Component {
+  static propTypes = {
+    tx: PropTypes.object
+  }
   static async getInitialProps (context) {
     try {
       const tx = await getTransactionById(context.query.id)
@@ -221,6 +224,7 @@ export default class transaction extends Component {
   }
 
   render () {
+    console.log(this.props.tx)
     return (
       <Container>
         {this.props.tx ? (
