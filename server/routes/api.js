@@ -1,5 +1,5 @@
 import express from 'express'
-import { getTransactionById } from '../services/watcher'
+import { getTransactionById } from '../services/watcherService'
 import { handleRequest } from './handler'
 const router = express.Router()
 
