@@ -28,11 +28,11 @@ const InnerCointainer = styled.div`
 `
 
 export default class NavBar extends Component {
-  render() {
+  render () {
     return (
       <Container>
         <InnerCointainer>
-          <Link href="/">
+          <Link href='/'>
             <img src={require('../statics/omisego-blue.svg')} />
           </Link>
           <Dropdown
@@ -40,7 +40,7 @@ export default class NavBar extends Component {
             render={({ open, dropdownBox, onClickButton }) => {
               return (
                 <DropdownContainer onClick={onClickButton}>
-                  <h1><span>TESUJI</span> {!open ? <Icon name="Chevron-Down" /> : <Icon name="Chevron-Up" />}</h1>{' '}
+                  <h1><span>TESUJI</span> {!open ? <Icon name='Chevron-Down' /> : <Icon name='Chevron-Up' />}</h1>{' '}
                   {open && dropdownBox}
                 </DropdownContainer>
               )

@@ -61,6 +61,11 @@ const TopContainer = styled.div`
     }
   }
 `
+const SmallTxText = styled.div`
+  font-size: 12px;
+  color: ${props => props.theme.colors.B100};
+  margin-bottom: 20px;
+`
 const ArrowContainer = styled.div`
   text-align: center;
   width: 150px;
@@ -97,6 +102,11 @@ const StyledCardHeader = styled(CardHeader)`
     font-weight: 900;
   }
 `
+const Error = styled.div`
+  font-size: 32px;
+  text-align: center;
+  margin-top: 100px;
+`
 const columns = [
   {
     key: 'address',
@@ -116,7 +126,7 @@ export default class transaction extends Component {
       const tx = await getTransactionById(context.query.id)
       return { tx: tx.data }
     } catch (err) {
-      return { error: err.response }
+      return { error: err.response.statusText || 'tx not found or something is wrong!' }
     }
   }
   renderTableCard () {
@@ -134,7 +144,7 @@ export default class transaction extends Component {
                 {
                   key: this.props.tx.data.spender1,
                   address: (
-                    <Link href='/'>
+                    <Link href='/' prefetch>
                       <a>{this.props.tx.data.spender1}</a>
                     </Link>
                   )
@@ -153,7 +163,7 @@ export default class transaction extends Component {
                 {
                   key: this.props.tx.data.newowner1,
                   address: (
-                    <Link href='/'>
+                    <Link href='/' prefetch>
                       <a>{this.props.tx.data.newowner1}</a>
                     </Link>
                   ),
@@ -162,7 +172,7 @@ export default class transaction extends Component {
                 {
                   key: this.props.tx.data.newowner2,
                   address: (
-                    <Link href='/'>
+                    <Link href='/' prefetch>
                       <a>{this.props.tx.data.newowner2}</a>
                     </Link>
                   ),
@@ -182,7 +192,7 @@ export default class transaction extends Component {
         <h2>
           <span>{truncateId(this.props.tx.data.txid)}</span>
         </h2>
-        <div style={{ fontSize: '12px', color: 'grey', marginBottom: '20px' }}>{this.props.tx.data.txid}</div>
+        <SmallTxText>{this.props.tx.data.txid}</SmallTxText>
         <Tag>SUCCESS</Tag>
       </TopContainer>
     )
@@ -194,7 +204,7 @@ export default class transaction extends Component {
           <Icon name='Token' />{' '}
           <span>
             OMG Block height{' '}
-            <Link href='/'>
+            <Link href='/' prefetch>
               <a>{this.props.tx.data.txblknum}</a>
             </Link>
           </span>
@@ -203,7 +213,7 @@ export default class transaction extends Component {
           <Icon name='Token' />{' '}
           <span>
             Ethereum Block height{' '}
-            <Link href='/'>
+            <Link href='/' prefetch>
               <a>{this.props.tx.data.txblknum}</a>
             </Link>
           </span>
@@ -225,7 +235,7 @@ export default class transaction extends Component {
             {this.renderFooter()}
           </Fragment>
         ) : (
-          'tx not found or something is wrong!'
+          <Error>tx not found or something is wrong!</Error>
         )}
       </Container>
     )
