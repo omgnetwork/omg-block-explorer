@@ -6,7 +6,7 @@ import http from 'http'
 
 import apiRoute from './routes/api'
 const nextApp = next({ dev: process.env.NODE_ENV !== 'production' })
-nextApp.prepare()
+
 const expressApp = express()
 const server = http.Server(expressApp)
 
@@ -23,8 +23,10 @@ expressApp.get('/transaction/:id', (req, res) => {
   return nextApp.render(req, res, '/transaction', params)
 })
 
-expressApp.get('*', (req, res) => {
-  return nextRequestHandler(req, res)
+nextApp.prepare().then(() => {
+  expressApp.get('*', (req, res) => {
+    return nextRequestHandler(req, res)
+  })
 })
 
 expressApp.use(handleUnexpectedError)
