@@ -23,7 +23,7 @@ export default class MyApp extends App {
         <Container>
           <GlobalStyle />
           <NavBar />
-          <div style={{ marginTop: '70px' }}>
+          <div style={{ paddingTop: '70px' }}>
             <Component {...pageProps} />
           </div>
         </Container>
