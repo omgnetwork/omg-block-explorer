@@ -116,7 +116,7 @@ export default class transaction extends Component {
       const tx = await getTransactionById(context.query.id)
       return { tx: tx.data }
     } catch (err) {
-      return { error: error.response }
+      return { error: err.response }
     }
   }
   renderTableCard () {
@@ -129,12 +129,7 @@ export default class transaction extends Component {
           <div>
             <h4>From</h4>
             <Table
-              columns={[
-                {
-                  key: 'address',
-                  value: 'address'
-                }
-              ]}
+              columns={[{ key: 'address', value: 'address' }]}
               dataSource={[
                 {
                   key: this.props.tx.data.spender1,
@@ -187,9 +182,7 @@ export default class transaction extends Component {
         <h2>
           <span>{truncateId(this.props.tx.data.txid)}</span>
         </h2>
-        <div style={{ fontSize: '12px', color: 'grey', marginBottom: '20px' }}>
-          {this.props.tx.data.txid}
-        </div>
+        <div style={{ fontSize: '12px', color: 'grey', marginBottom: '20px' }}>{this.props.tx.data.txid}</div>
         <Tag>SUCCESS</Tag>
       </TopContainer>
     )
@@ -216,15 +209,13 @@ export default class transaction extends Component {
           </span>
         </div>
         <div>
-          <Icon name='Time' />{' '}
-          <span>3 hrs. 23 mins ago | 3 hrs. 23 mins ago | 3 hrs. 23 mins ago</span>
+          <Icon name='Time' /> <span>3 hrs. 23 mins ago | 3 hrs. 23 mins ago | 3 hrs. 23 mins ago</span>
         </div>
       </FooterContainer>
     )
   }
 
   render () {
-    console.log(this.props.tx)
     return (
       <Container>
         {this.props.tx ? (
