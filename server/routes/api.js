@@ -1,13 +1,13 @@
 import express from 'express'
 import { getTransactionById } from '../services/watcherService'
-import { handleRequest } from './handler'
+import createRouteHandler from './createRouteHandler'
 const router = express.Router()
 
 router.get('/transactions', (req, res) => {
   res.send(true)
 })
 
-router.get('/transaction/:id', handleRequest((req, res) => {
+router.get('/transaction/:id', createRouteHandler((req, res) => {
   return getTransactionById(req.params.id)
 }))
 
