@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import Table from '../components/Table'
 import Link from 'next/link'
 import { truncateId } from '../utils/truncate'
-import { getTransactionById } from '../services/transaction'
+import { getTransactionById } from '../services/transactionService'
 import _ from 'lodash'
 const Container = styled.div`
   max-width: 70%;
