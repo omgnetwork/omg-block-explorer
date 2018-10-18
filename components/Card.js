@@ -17,19 +17,20 @@ const ContentContainer = styled.div`
 
 export class CardHeader extends Component {
   static propTypes = {
-    childen: PropTypes.node
+    children: PropTypes.node,
+    className: PropTypes.string
   }
-  render() {
+  render () {
     return <Header className={this.props.className}>{this.props.children}</Header>
   }
 }
 
 export default class Card extends Component {
   static propTypes = {
-    childen: PropTypes.node
+    children: PropTypes.node
   }
 
-  render() {
+  render () {
     return (
       <CardContainer>
         <ContentContainer>{this.props.children}</ContentContainer>

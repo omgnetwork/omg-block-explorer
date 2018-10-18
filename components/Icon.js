@@ -12,7 +12,7 @@ const IconComponent = styled.i`
 
   :hover {
     background-color: ${props =>
-      props.button && props.hoverable ? props.theme.colors.S200 : 'transparent'};
+    props.button && props.hoverable ? props.theme.colors.S200 : 'transparent'};
   }
 `
 export default class Icon extends Component {

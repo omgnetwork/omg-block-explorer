@@ -27,7 +27,7 @@ export default class Tag extends Component {
     children: PropTypes.node
   }
 
-  render() {
+  render () {
     return <TagContainer><span>{this.props.children}</span></TagContainer>
   }
 }

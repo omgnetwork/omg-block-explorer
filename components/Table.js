@@ -26,7 +26,7 @@ export default class TableComponent extends Component {
     columns: []
   }
 
-  render() {
+  render () {
     return (
       <Table>
         <thead>

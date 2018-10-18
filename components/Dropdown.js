@@ -71,7 +71,7 @@ class Dropdown extends PureComponent {
     e.stopPropagation()
     return false
   }
-  render() {
+  render () {
     const dropdownBox = (
       <DropdownBox open={this.state.open} onClick={this.stopPropagation}>
         {this.props.data.map((item, i) => (

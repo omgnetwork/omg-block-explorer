@@ -37,7 +37,7 @@ export default class NavBar extends Component {
       <Container>
         <InnerCointainer>
           <Link href='/'>
-            <img src={require('../statics/omisego-blue.svg')} />
+            <img src={require('../statics/images/omisego-blue.svg')} />
           </Link>
           {/* <Dropdown
             data={['TESUJI']}
