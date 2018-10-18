@@ -4,9 +4,9 @@
   "description": "a mysterious place where you can see transactions data.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -w ./server ./server/index.js",
+    "dev": "nodemon -w ./server ./server/index.js --exec babel-node --presets @babel/preset-env",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node ./server/index.js"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,10 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "@babel/cli": "^7.0.0-beta.44",
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/node": "^7.0.0-beta.44",
+    "@babel/preset-env": "^7.0.0-beta.44"
   }
 }

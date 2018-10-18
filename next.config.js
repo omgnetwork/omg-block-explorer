@@ -5,7 +5,7 @@ module.exports = compose(
   withImages,
   withCSS
 )({
-  webpack(config, options) {
+  webpack (config, options) {
     config.module.rules.push({
       test: /\.(woff|woff2|eot|ttf|otf)$/,
       use: [
@@ -25,7 +25,7 @@ module.exports = compose(
   }
 })
 
-function compose() {
+function compose () {
   let composed
   return param => {
     composed = arguments[0](param)

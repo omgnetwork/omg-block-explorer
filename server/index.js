@@ -1,21 +1,20 @@
-const next = require('next')
+import next from 'next'
+
+import express from 'express'
+import bodyParser from 'body-parser'
+import http from 'http'
+
+import apiRoute from './routes/api'
 const nextApp = next({ dev: process.env.NODE_ENV !== 'production' })
 nextApp.prepare()
-
-const express = require('express')
-const bodyParser = require('body-parser')
 const expressApp = express()
-
-const server = require('http').Server(expressApp)
+const server = http.Server(expressApp)
 
 const nextRequestHandler = nextApp.getRequestHandler()
-
-const apiRoute = require('./routes/api')
 
 const PORT = 3000
 
 expressApp.use(bodyParser.json())
-
 
 expressApp.use('/api', apiRoute)
 

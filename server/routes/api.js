@@ -1,6 +1,6 @@
-const express = require('express')
+import express from 'express'
+import { getTransactionById } from '../services/watcher'
 const router = express.Router()
-const { getTransactionById } = require('../services/watcher')
 router.get('/transactions', (req, res) => {
   res.send(true)
 })
@@ -31,4 +31,4 @@ router.get('/utxos', (req, res) => {
   res.send(true)
 })
 
-module.exports = router
+export default router
