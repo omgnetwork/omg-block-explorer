@@ -130,7 +130,7 @@ export default class transaction extends Component {
       const tx = await getTransactionById(context.query.id)
       return { tx: tx.data }
     } catch (err) {
-      return { error: err.response.statusText || 'tx not found or something is wrong!' }
+      return { error: 'tx not found or something is wrong!' }
     }
   }
   renderTableCard () {
