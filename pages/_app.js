@@ -23,7 +23,9 @@ export default class MyApp extends App {
         <Container>
           <GlobalStyle />
           <NavBar />
-          <Component {...pageProps} />
+          <div style={{ marginTop: '70px' }}>
+            <Component {...pageProps} />
+          </div>
         </Container>
       </ThemeProvider>
     )

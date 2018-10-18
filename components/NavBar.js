@@ -39,7 +39,7 @@ export default class NavBar extends Component {
           <Link href='/'>
             <img src={require('../statics/omisego-blue.svg')} />
           </Link>
-          <Dropdown
+          {/* <Dropdown
             data={['TESUJI']}
             render={({ open, dropdownBox, onClickButton }) => {
               return (
@@ -49,7 +49,7 @@ export default class NavBar extends Component {
                 </DropdownContainer>
               )
             }}
-          />
+          /> */}
         </InnerCointainer>
       </Container>
     )
