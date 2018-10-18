@@ -33,7 +33,7 @@ expressApp.use(handleUnexpectedError)
 
 server.listen(PORT, err => {
   if (err) throw err
-  console.log(`> Ready on http://localhost:${PORT}`)
+  console.log(`Ready on http://localhost:${PORT}`)
 })
 
 function handleUnexpectedError (error, req, res, next) {
