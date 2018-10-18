@@ -108,7 +108,7 @@ const columns = [
   }
 ]
 export default class transaction extends Component {
-  static async getInitialProps(context) {
+  static async getInitialProps (context) {
     try {
       const tx = await getTransactionById(context.query.id)
       return { tx: tx.data }
@@ -116,7 +116,7 @@ export default class transaction extends Component {
       return { error: error.response }
     }
   }
-  renderTableCard() {
+  renderTableCard () {
     return (
       <Card>
         <StyledCardHeader>
@@ -136,7 +136,7 @@ export default class transaction extends Component {
                 {
                   key: this.props.tx.data.spender1,
                   address: (
-                    <Link href="/">
+                    <Link href='/'>
                       <a>{this.props.tx.data.spender1}</a>
                     </Link>
                   )
@@ -145,7 +145,7 @@ export default class transaction extends Component {
             />
           </div>
           <ArrowContainer>
-            <Icon name="Arrow-Right" />
+            <Icon name='Arrow-Right' />
           </ArrowContainer>
           <div>
             <h4>To</h4>
@@ -155,7 +155,7 @@ export default class transaction extends Component {
                 {
                   key: this.props.tx.data.newowner1,
                   address: (
-                    <Link href="/">
+                    <Link href='/'>
                       <a>{this.props.tx.data.newowner1}</a>
                     </Link>
                   ),
@@ -164,7 +164,7 @@ export default class transaction extends Component {
                 {
                   key: this.props.tx.data.newowner2,
                   address: (
-                    <Link href="/">
+                    <Link href='/'>
                       <a>{this.props.tx.data.newowner2}</a>
                     </Link>
                   ),
@@ -177,7 +177,7 @@ export default class transaction extends Component {
       </Card>
     )
   }
-  renderTransactionHeader() {
+  renderTransactionHeader () {
     return (
       <TopContainer>
         <h1>Transaction</h1>
@@ -191,36 +191,36 @@ export default class transaction extends Component {
       </TopContainer>
     )
   }
-  renderFooter() {
+  renderFooter () {
     return (
       <FooterContainer>
         <div>
-          <Icon name="Token" />{' '}
+          <Icon name='Token' />{' '}
           <span>
             OMG Block height{' '}
-            <Link href="/">
+            <Link href='/'>
               <a>{this.props.tx.data.txblknum}</a>
             </Link>
           </span>
         </div>
         <div>
-          <Icon name="Token" />{' '}
+          <Icon name='Token' />{' '}
           <span>
             Ethereum Block height{' '}
-            <Link href="/">
+            <Link href='/'>
               <a>{this.props.tx.data.txblknum}</a>
             </Link>
           </span>
         </div>
         <div>
-          <Icon name="Time" />{' '}
+          <Icon name='Time' />{' '}
           <span>3 hrs. 23 mins ago | 3 hrs. 23 mins ago | 3 hrs. 23 mins ago</span>
         </div>
       </FooterContainer>
     )
   }
 
-  render() {
+  render () {
     return (
       <Container>
         {this.props.tx ? (

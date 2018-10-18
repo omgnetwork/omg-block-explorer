@@ -45,7 +45,7 @@ const columns = [
   }
 ]
 export default class HomePage extends Component {
-  render() {
+  render () {
     return (
       <Container>
         <Card>

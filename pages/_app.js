@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components'
 import GlobalStyle from '../styles/globalStyle'
 
 export default class MyApp extends App {
-  static async getInitialProps({ Component, router, ctx }) {
+  static async getInitialProps ({ Component, router, ctx }) {
     let pageProps = {}
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
@@ -15,7 +15,7 @@ export default class MyApp extends App {
     return { pageProps }
   }
 
-  render() {
+  render () {
     const { Component, pageProps } = this.props
 
     return (
