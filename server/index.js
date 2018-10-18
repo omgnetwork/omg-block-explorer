@@ -27,7 +27,13 @@ expressApp.get('*', (req, res) => {
   return nextRequestHandler(req, res)
 })
 
+expressApp.use(handleUnexpectedError)
+
 server.listen(PORT, err => {
   if (err) throw err
   console.log(`> Ready on http://localhost:${PORT}`)
 })
+
+function handleUnexpectedError (error, req, res, next) {
+  res.status(500).send({ success: false, data: error.message })
+}

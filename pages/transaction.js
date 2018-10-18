@@ -125,21 +125,22 @@ const columns = [
 export default class transaction extends Component {
   static propTypes = {
     tx: PropTypes.object,
-    error: PropTypes.any
+    error: PropTypes.any,
+    success: PropTypes.bool
   }
   static async getInitialProps (context) {
     try {
-      const tx = await getTransactionById(context.query.id)
-      return { tx: tx.data }
-    } catch (err) {
-      return { error: _.get(err, 'response.data.data.description') || _.get(err, 'response.statusText') || 'something is wrong!' }
+      const result = await getTransactionById(context.query.id)
+      return { tx: result.data, success: result.success, error: result.error }
+    } catch (error) {
+      return { error: 'something is wrong!' }
     }
   }
   renderTableCard () {
     return (
       <Card>
         <StyledCardHeader>
-          Transferred <span>{this.props.tx.data.amount1} ETH</span>
+          Transferred <span>{this.props.tx.amount1} ETH</span>
         </StyledCardHeader>
         <CardContent>
           <div>
@@ -148,10 +149,10 @@ export default class transaction extends Component {
               columns={[{ key: 'address', value: 'address' }]}
               dataSource={[
                 {
-                  key: this.props.tx.data.spender1,
+                  key: this.props.tx.spender1,
                   address: (
                     <Link href='/' prefetch>
-                      <a>{this.props.tx.data.spender1}</a>
+                      <a>{this.props.tx.spender1}</a>
                     </Link>
                   )
                 }
@@ -167,22 +168,22 @@ export default class transaction extends Component {
               columns={columns}
               dataSource={[
                 {
-                  key: this.props.tx.data.newowner1,
+                  key: this.props.tx.newowner1,
                   address: (
                     <Link href='/' prefetch>
-                      <a>{this.props.tx.data.newowner1}</a>
+                      <a>{this.props.tx.newowner1}</a>
                     </Link>
                   ),
-                  input: `${this.props.tx.data.amount1} ETH`
+                  input: `${this.props.tx.amount1} ETH`
                 },
                 {
-                  key: this.props.tx.data.newowner2,
+                  key: this.props.tx.newowner2,
                   address: (
                     <Link href='/' prefetch>
-                      <a>{this.props.tx.data.newowner2}</a>
+                      <a>{this.props.tx.newowner2}</a>
                     </Link>
                   ),
-                  input: `${this.props.tx.data.amount2} ETH`
+                  input: `${this.props.tx.amount2} ETH`
                 }
               ]}
             />
@@ -196,9 +197,9 @@ export default class transaction extends Component {
       <TopContainer>
         <h1>Transaction</h1>
         <h2>
-          <span>{truncateId(this.props.tx.data.txid)}</span>
+          <span>{truncateId(this.props.tx.txid)}</span>
         </h2>
-        <SmallTxText>{this.props.tx.data.txid}</SmallTxText>
+        <SmallTxText>{this.props.tx.txid}</SmallTxText>
         <Tag>SUCCESS</Tag>
       </TopContainer>
     )
@@ -211,7 +212,7 @@ export default class transaction extends Component {
           <span>
             OMG Block height{' '}
             <Link href='/' prefetch>
-              <a>{this.props.tx.data.txblknum}</a>
+              <a>{this.props.tx.txblknum}</a>
             </Link>
           </span>
         </div>
@@ -220,7 +221,7 @@ export default class transaction extends Component {
           <span>
             Ethereum Block height{' '}
             <Link href='/' prefetch>
-              <a>{this.props.tx.data.txblknum}</a>
+              <a>{this.props.tx.txblknum}</a>
             </Link>
           </span>
         </div>
@@ -234,7 +235,7 @@ export default class transaction extends Component {
   render () {
     return (
       <Container>
-        {this.props.tx ? (
+        {this.props.success ? (
           <Fragment>
             {this.renderTransactionHeader()}
             {this.renderTableCard()}
