@@ -4,7 +4,7 @@ import createRouteHandler from './createRouteHandler'
 const router = express.Router()
 
 router.get('/transactions', createRouteHandler((req, res) => {
-  return getTransactions({ address: req.params.address, limit: req.params.limit })
+  return getTransactions({ address: req.query.address, limit: req.query.limit })
 }))
 
 router.get('/transaction/:id', createRouteHandler((req, res) => {

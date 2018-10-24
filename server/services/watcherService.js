@@ -8,7 +8,7 @@ export function getTransactionById (transactionId) {
 }
 
 export function getTransactions ({ address, limit = 200 } = {}) {
-  const query = queryString.stringify({ address, limit })
+  const query = queryString.stringify({ address: address && `0x${String(address).toLocaleLowerCase()}`, limit })
   return instance
     .get(`/transactions${query ? `?${query}` : ''}`)
     .then(handleResponse)

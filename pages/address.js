@@ -6,7 +6,9 @@ import Card, { CardHeader } from '../components/Card'
 import Table from '../components/Table'
 import Link from 'next/link'
 import Icon from '../components/Icon'
-
+import Router from 'next/router'
+import _ from 'lodash'
+import { truncateId } from '../utils/truncate'
 const Container = styled.div`
   position: relative;
   max-width: 70%;
@@ -44,6 +46,25 @@ const Container = styled.div`
     }
   }
 `
+const TopContainer = styled.div`
+  margin-bottom: 50px;
+  > h1 {
+    font-family: Circular, Arial, sans-serif;
+  }
+  h2 {
+    font-size: 34px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    i {
+      color: ${props => props.theme.colors.B100};
+      vertical-align: middle;
+      font-size: 18px;
+    }
+    span {
+      vertical-align: middle;
+    }
+  }
+`
 
 const columns = [
   {
@@ -76,15 +97,20 @@ const AddressContainer = styled.div`
     margin-bottom: 5px;
   }
 `
-
-export default class HomePage extends Component {
+const SmallTxText = styled.div`
+  font-size: 12px;
+  color: ${props => props.theme.colors.B100};
+  margin-bottom: 20px;
+`
+export default class AddressPage extends Component {
   static propTypes = {
-    txs: PropTypes.array
+    txs: PropTypes.array,
+    query: PropTypes.object
   }
   static async getInitialProps (context) {
     try {
-      const { data, success, error } = await getTransactions()
-      return { txs: data, success, error }
+      const { data, success, error } = await getTransactions({ address: context.query.id })
+      return { txs: data || [], success, error, query: context.query }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
@@ -92,9 +118,16 @@ export default class HomePage extends Component {
   render () {
     return (
       <Container>
+        <TopContainer>
+          <h1>Address</h1>
+          <h2>
+            <span>{truncateId(this.props.query.id)}</span>
+          </h2>
+          <SmallTxText>{ this.props.query.id}</SmallTxText>
+        </TopContainer>
         <Card>
           <CardHeader>
-            <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 200 Records</span>
+            <h4>TRANSACTIONS: </h4> <span>showing the latest 200 Records</span>
           </CardHeader>
           <Table
             columns={columns}
