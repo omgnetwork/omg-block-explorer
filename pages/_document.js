@@ -12,7 +12,10 @@ export default class MyDocument extends Document {
   render () {
     return (
       <html>
+        <title>OmiseGO Explorer</title>
         <Head>{this.props.styleTags}</Head>
+        <link rel='icon' href={require('../statics/images/favicon.png')} type='image/x-icon' />
+        <link rel='shortcut icon' href={require('../statics/images/favicon.png')} type='image/x-icon' />
         <link
           rel='stylesheet'
           href='https://cdn.omise.co/assets/fonts/CircularStd-Black/fonts.css'
