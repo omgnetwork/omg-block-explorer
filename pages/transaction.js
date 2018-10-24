@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 import Card, { CardHeader } from '../components/Card'
 import Tag from '../components/Tag'
 import Icon from '../components/Icon'
@@ -25,7 +24,6 @@ const CardContent = styled.div`
   }
   table {
     text-align: left;
-    table-layout: fixed;
     font-size: 14px;
     th:last-child,
     td:last-child {

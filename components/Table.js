@@ -4,12 +4,13 @@ import styled from 'styled-components'
 
 const Table = styled.table`
   width: 100%;
+  table-layout: fixed;
 `
 const Th = styled.th`
-  padding: 15px 0;
+  padding: 15px 20px;
 `
 const Td = styled.td`
-  padding: 10px 0;
+  padding: 10px 20px;
   border-bottom: 1px solid #f7f8fa;
   font-size: 14px;
   :first-child {
