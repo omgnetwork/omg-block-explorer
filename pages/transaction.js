@@ -130,8 +130,8 @@ export default class transaction extends Component {
   }
   static async getInitialProps (context) {
     try {
-      const result = await getTransactionById(context.query.id)
-      return { tx: result.data, success: result.success, error: result.error }
+      const { data, success, error } = await getTransactionById(context.query.id)
+      return { tx: data, success: success, error: error }
     } catch (error) {
       return { error: 'something is wrong!' }
     }

@@ -1,11 +1,11 @@
 import express from 'express'
-import { getTransactionById } from '../services/watcherService'
+import { getTransactionById, getTransactions } from '../services/watcherService'
 import createRouteHandler from './createRouteHandler'
 const router = express.Router()
 
-router.get('/transactions', (req, res) => {
-  res.send(true)
-})
+router.get('/transactions', createRouteHandler((req, res) => {
+  return getTransactions({ address: req.params.address, limit: req.params.limit })
+}))
 
 router.get('/transaction/:id', createRouteHandler((req, res) => {
   return getTransactionById(req.params.id)

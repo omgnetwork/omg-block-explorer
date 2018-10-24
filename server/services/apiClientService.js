@@ -7,7 +7,7 @@ export function handleResponse (response) {
 
 export function handleError (error) {
   if (error.response) {
-    return { success: false, error: error.response.statusText }
+    return { success: false, error: error.response.data.data }
   } else if (error.request) {
     return { success: false, error: null }
   } else {
