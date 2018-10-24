@@ -163,10 +163,10 @@ export default class AddressPage extends Component {
                 amount: (
                   <div>
                     <div style={{ marginBottom: '5px' }}>
-                      <span>{tx.amount1}</span> <span>ETH</span>
+                      <span>{tx.amount1}</span> <span>{tx.token_symbol}</span>
                     </div>
                     <div>
-                      <span>{tx.amount2}</span> <span>ETH</span>
+                      <span>{tx.amount2}</span> <span>{tx.token_symbol}</span>
                     </div>
                   </div>
                 ),

@@ -138,7 +138,7 @@ export default class transaction extends Component {
     return (
       <Card>
         <StyledCardHeader>
-          Transferred <span>{this.props.tx.amount1} ETH</span>
+          Transferred <span>{this.props.tx.amount1} {this.props.tx.token_symbol}</span>
         </StyledCardHeader>
         <CardContent>
           <div>
@@ -172,7 +172,7 @@ export default class transaction extends Component {
                       <a>{this.props.tx.newowner1}</a>
                     </Link>
                   ),
-                  amount: `${this.props.tx.amount1} ETH`
+                  amount: `${this.props.tx.amount1} ${this.props.tx.token_symbol}`
                 },
                 {
                   key: this.props.tx.newowner2,
@@ -181,7 +181,7 @@ export default class transaction extends Component {
                       <a>{this.props.tx.newowner2}</a>
                     </Link>
                   ),
-                  amount: `${this.props.tx.amount2} ETH`
+                  amount: `${this.props.tx.amount2} ${this.props.tx.token_symbol}`
                 }
               ]}
             />
