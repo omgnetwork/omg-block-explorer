@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import http from 'http'
 
 import apiRoute from './routes/api'
+import compression from 'compression'
 const nextApp = next({ dev: process.env.NODE_ENV !== 'production' })
 
 const expressApp = express()
@@ -13,6 +14,10 @@ const server = http.Server(expressApp)
 const nextRequestHandler = nextApp.getRequestHandler()
 
 const PORT = 3000
+
+if (process.env.NODE_ENV === 'production') {
+  expressApp.use(compression())
+}
 
 expressApp.use(bodyParser.json())
 
