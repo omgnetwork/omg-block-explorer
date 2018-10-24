@@ -18,11 +18,6 @@ expressApp.use(bodyParser.json())
 
 expressApp.use('/api', apiRoute)
 
-expressApp.get('/transaction/:id', (req, res) => {
-  const params = { id: req.params.id }
-  return nextApp.render(req, res, '/transaction', params)
-})
-
 nextApp.prepare().then(() => {
   expressApp.get('*', (req, res) => {
     return nextRequestHandler(req, res)

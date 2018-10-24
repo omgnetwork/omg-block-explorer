@@ -94,12 +94,12 @@ export default class HomePage extends Component {
               return {
                 key: tx.txid,
                 tx: (
-                  <Link href='/' prefetch>
+                  <Link as={`/transaction/${tx.txid}`} href={`/transaction/?id=${tx.txid}`} prefetch>
                     <a>{tx.txid}</a>
                   </Link>
                 ),
                 block: tx.txblknum,
-                age: Date.now(),
+                age: 'hello',
                 from: (
                   <div>
                     <Link href='/' prefetch>
