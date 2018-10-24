@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Dropdown from '../components/Dropdown'
 import Icon from './Icon'
 import Link from 'next/link'
+import Router from 'next/router'
 const Container = styled.div`
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
   position: absolute;
@@ -20,6 +21,14 @@ const DropdownContainer = styled.div`
     vertical-align: middle;
   }
 `
+const Input = styled.input`
+  margin-left: auto;
+  border-radius: 5px;
+  box-shadow: none;
+  border: 1px solid ${props => props.theme.colors.S400};
+  padding: 10px;
+  width: 100%;
+`
 const InnerCointainer = styled.div`
   max-width: 70%;
   margin: 0 auto;
@@ -29,9 +38,30 @@ const InnerCointainer = styled.div`
   img {
     cursor: pointer;
   }
+  form {
+    margin-left: auto;
+    max-width: 300px;
+    width: 100%;
+  }
 `
 
 export default class NavBar extends Component {
+  onSearch = e => {
+    e.preventDefault()
+    const value = this.input.value
+    switch (value.length) {
+      case 64:
+        Router.push(`/transaction?id=${value}`, `/transaction/${value}`)
+        break
+      case 40:
+        Router.push(`/address?id=${value}`, `/address/${value}`)
+        break
+      default:
+        break
+    }
+    this.input.value = ''
+    this.input.blur()
+  }
   render () {
     return (
       <Container>
@@ -50,6 +80,9 @@ export default class NavBar extends Component {
               )
             }}
           /> */}
+          <form onSubmit={this.onSearch}>
+            <Input placeholder='Search tx or address' ref={input => this.input = input} />
+          </form>
         </InnerCointainer>
       </Container>
     )

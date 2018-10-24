@@ -116,8 +116,8 @@ const columns = [
     value: 'address'
   },
   {
-    key: 'input',
-    value: 'input'
+    key: 'amount',
+    value: 'amount'
   }
 ]
 export default class transaction extends Component {
@@ -172,7 +172,7 @@ export default class transaction extends Component {
                       <a>{this.props.tx.newowner1}</a>
                     </Link>
                   ),
-                  input: `${this.props.tx.amount1} ETH`
+                  amount: `${this.props.tx.amount1} ETH`
                 },
                 {
                   key: this.props.tx.newowner2,
@@ -181,7 +181,7 @@ export default class transaction extends Component {
                       <a>{this.props.tx.newowner2}</a>
                     </Link>
                   ),
-                  input: `${this.props.tx.amount2} ETH`
+                  amount: `${this.props.tx.amount2} ETH`
                 }
               ]}
             />

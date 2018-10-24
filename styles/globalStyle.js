@@ -56,6 +56,11 @@ const GlobalStyle = createGlobalStyle`
 		text-decoration: none;
 		color: ${props => props.theme.colors.BL400};
 	}
+	
+	input {
+		outline: none; 
+	}
+	
 `
 
 export default GlobalStyle
