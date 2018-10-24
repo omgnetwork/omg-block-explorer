@@ -18,10 +18,11 @@ const Container = styled.div`
   table {
     text-align: left;
     a {
-      display: inline-block;
+      display: block;
       width: 100%;
     }
-    td > div,a {
+    td > div,
+    a {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -70,6 +71,11 @@ const columns = [
     value: 'Value transacted'
   }
 ]
+const AddressContainer = styled.div`
+  a:first-child {
+    margin-bottom: 5px;
+  }
+`
 export default class HomePage extends Component {
   static propTypes = {
     txs: PropTypes.array
@@ -95,38 +101,39 @@ export default class HomePage extends Component {
               return {
                 key: tx.txid,
                 tx: (
-                  <Link as={`/transaction/${tx.txid}`} href={`/transaction/?id=${tx.txid}`} prefetch>
+                  <Link as={`/transaction/${tx.txid}`} href={`/transaction?id=${tx.txid}`} prefetch>
                     <a>{tx.txid}</a>
                   </Link>
                 ),
                 block: tx.txblknum,
                 from: (
-                  <div>
-                    <Link as={`/address/${tx.spender1}`} href={`/address/?id=${tx.spender1}`} prefetch>
+                  <AddressContainer>
+                    <Link as={`/address/${tx.spender1}`} href={`/address?id=${tx.spender1}`} prefetch>
                       <a>{tx.spender1}</a>
                     </Link>
-                    <br />
-                    <Link as={`/address/${tx.spender2}`} href={`/address/?id=${tx.spender2}`} prefetch>
+                    <Link as={`/address/${tx.spender2}`} href={`/address?id=${tx.spender2}`} prefetch>
                       <a>{tx.spender2}</a>
                     </Link>
-                  </div>
+                  </AddressContainer>
                 ),
                 to: (
-                  <div>
-                    <Link as={`/address/${tx.newowner1}`} href={`/address/?id=${tx.newowner1}`} prefetch>
+                  <AddressContainer>
+                    <Link as={`/address/${tx.newowner1}`} href={`/address?id=${tx.newowner1}`} prefetch>
                       <a>{tx.newowner1}</a>
                     </Link>
-                    <br />
-                    <Link as={`/address/${tx.newowner2}`} href={`/address/?id=${tx.newowner2}`} prefetch>
+                    <Link as={`/address/${tx.newowner2}`} href={`/address?id=${tx.newowner2}`} prefetch>
                       <a>{tx.newowner2}</a>
                     </Link>
-                  </div>
+                  </AddressContainer>
                 ),
                 amount: (
                   <div>
-                    <span>{tx.amount1}</span> <span>ETH</span>
-                    <br />
-                    <span>{tx.amount2}</span> <span>ETH</span>
+                    <div style={{ marginBottom: '5px' }}>
+                      <span>{tx.amount1}</span> <span>ETH</span>
+                    </div>
+                    <div>
+                      <span>{tx.amount2}</span> <span>ETH</span>
+                    </div>
                   </div>
                 ),
                 arrow: <Icon name='Arrow-Long-Right' />
