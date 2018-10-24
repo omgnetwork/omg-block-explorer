@@ -13,9 +13,7 @@ const Td = styled.td`
   padding: 10px 20px;
   border-bottom: 1px solid #f7f8fa;
   font-size: 14px;
-  :first-child {
-    border-top: 1px solid #f7f8fa;
-  }
+  border-top: 1px solid #f7f8fa;
 `
 export default class TableComponent extends Component {
   static propTypes = {

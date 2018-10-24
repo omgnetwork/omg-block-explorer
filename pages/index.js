@@ -30,11 +30,16 @@ const Container = styled.div`
     th:first-child {
       padding-left: 20px;
     }
-    th:nth-child(5) {
+    th:nth-child(4) {
       width: 50px;
     }
-    td:nth-child(5) {
+    td:nth-child(4) {
       text-align: center;
+      padding: 0;
+      vertical-align: middle;
+    }
+    td {
+      vertical-align: middle;
     }
   }
 `
@@ -47,10 +52,6 @@ const columns = [
   {
     key: 'block',
     value: 'Block'
-  },
-  {
-    key: 'age',
-    value: 'Age'
   },
   {
     key: 'from',
@@ -99,7 +100,6 @@ export default class HomePage extends Component {
                   </Link>
                 ),
                 block: tx.txblknum,
-                age: 'hello',
                 from: (
                   <div>
                     <Link href='/' prefetch>
@@ -124,9 +124,9 @@ export default class HomePage extends Component {
                 ),
                 amount: (
                   <div>
-                    {tx.amount1}
+                    {tx.amount1} ETH
                     <br />
-                    {tx.amount2}
+                    {tx.amount2} ETH
                   </div>
                 ),
                 arrow: <Icon name='Arrow-Long-Right' />
