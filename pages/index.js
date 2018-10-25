@@ -95,7 +95,7 @@ export default class HomePage extends Component {
   static async getInitialProps (context) {
     try {
       const { data, success, error } = await getTransactions()
-      return { txs: data, success, error: error && (error.description || error) }
+      return { txs: data, success, error: error && (error.description || error || 'Something going bad here...') }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
