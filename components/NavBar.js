@@ -57,9 +57,8 @@ export default class NavBar extends Component {
         Router.push(`/address?id=${value}`, `/address/${value}`)
         break
       default:
-        break
+        Router.push(`/address?id=${value}`, `/address/${value}`)
     }
-    this.input.value = ''
     this.input.blur()
   }
   render () {
