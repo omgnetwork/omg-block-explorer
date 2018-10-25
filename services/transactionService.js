@@ -3,7 +3,10 @@ import queryString from 'query-string'
 import CONSTANT from '../constant'
 
 function formatTransaction (tx) {
-  return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[tx.cur12] }
+  if (typeof tx === 'object') {
+    return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[tx.cur12] }
+  }
+  return tx
 }
 
 export function getTransactionById (transactionId) {
