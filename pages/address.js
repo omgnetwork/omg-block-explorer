@@ -110,7 +110,7 @@ export default class AddressPage extends Component {
   static async getInitialProps (context) {
     try {
       const { data, success, error } = await getTransactions({ address: context.query.id })
-      return { txs: data || [], success, error, query: context.query }
+      return { txs: data || [], success, error: error && (error.description || error || 'Something going bad here...'), query: context.query }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
@@ -123,7 +123,7 @@ export default class AddressPage extends Component {
           <h2>
             <span>{truncateId(this.props.query.id)}</span>
           </h2>
-          <SmallTxText>{ this.props.query.id}</SmallTxText>
+          <SmallTxText>{this.props.query.id}</SmallTxText>
         </TopContainer>
         <Card>
           <CardHeader>
