@@ -134,6 +134,7 @@ export default class transaction extends Component {
       return { error: 'something is wrong!' }
     }
   }
+
   renderTableCard () {
     return (
       <Card>
@@ -149,7 +150,7 @@ export default class transaction extends Component {
                 {
                   key: this.props.tx.spender1,
                   address: (
-                    <Link href='/' prefetch>
+                    <Link as={`/address/${this.props.tx.spender1}`} href={`/address?id=${this.props.tx.spender1}`} prefetch>
                       <a>{this.props.tx.spender1}</a>
                     </Link>
                   )
@@ -168,7 +169,7 @@ export default class transaction extends Component {
                 {
                   key: this.props.tx.newowner1,
                   address: (
-                    <Link href='/' prefetch>
+                    <Link as={`/address/${this.props.tx.newowner1}`} href={`/address?id=${this.props.tx.newowner1}`} prefetch>
                       <a>{this.props.tx.newowner1}</a>
                     </Link>
                   ),
@@ -177,7 +178,7 @@ export default class transaction extends Component {
                 {
                   key: this.props.tx.newowner2,
                   address: (
-                    <Link href='/' prefetch>
+                    <Link as={`/address/${this.props.tx.newowner2}`} href={`/address?id=${this.props.tx.newowner2}`} prefetch>
                       <a>{this.props.tx.newowner2}</a>
                     </Link>
                   ),

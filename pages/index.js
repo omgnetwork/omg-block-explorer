@@ -100,6 +100,9 @@ export default class HomePage extends Component {
       return { error: 'something is wrong!' }
     }
   }
+  static defaultProps = {
+    txs: []
+  }
   render () {
     return (
       <Container>

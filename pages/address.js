@@ -65,7 +65,12 @@ const TopContainer = styled.div`
     }
   }
 `
-
+const Empty = styled.div`
+  text-align: center;
+  padding: 50px;
+  font-size: 32px;
+  
+`
 const columns = [
   {
     key: 'tx',
@@ -110,10 +115,13 @@ export default class AddressPage extends Component {
   static async getInitialProps (context) {
     try {
       const { data, success, error } = await getTransactions({ address: context.query.id })
-      return { txs: data || [], success, error: error && (error.description || error || 'Something going bad here...'), query: context.query }
+      return { txs: data, success, error: error && (error.description || error || 'Something going bad here...'), query: context.query }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
+  }
+  static defaultProps = {
+    txs: []
   }
   render () {
     return (
@@ -129,51 +137,55 @@ export default class AddressPage extends Component {
           <CardHeader>
             <h4>TRANSACTIONS: </h4> <span>showing the latest 200 Records</span>
           </CardHeader>
-          <Table
-            columns={columns}
-            dataSource={this.props.txs.map(tx => {
-              return {
-                key: tx.txid,
-                tx: (
-                  <Link as={`/transaction/${tx.txid}`} href={`/transaction?id=${tx.txid}`} prefetch>
-                    <a>{tx.txid}</a>
-                  </Link>
-                ),
-                block: tx.txblknum,
-                from: (
-                  <AddressContainer>
-                    <Link as={`/address/${tx.spender1}`} href={`/address?id=${tx.spender1}`} prefetch>
-                      <a>{tx.spender1}</a>
+          {this.props.txs.length > 0 ? (
+            <Table
+              columns={columns}
+              dataSource={this.props.txs.map(tx => {
+                return {
+                  key: tx.txid,
+                  tx: (
+                    <Link as={`/transaction/${tx.txid}`} href={`/transaction?id=${tx.txid}`} prefetch>
+                      <a>{tx.txid}</a>
                     </Link>
-                    <Link as={`/address/${tx.spender2}`} href={`/address?id=${tx.spender2}`} prefetch>
-                      <a>{tx.spender2}</a>
-                    </Link>
-                  </AddressContainer>
-                ),
-                to: (
-                  <AddressContainer>
-                    <Link as={`/address/${tx.newowner1}`} href={`/address?id=${tx.newowner1}`} prefetch>
-                      <a>{tx.newowner1}</a>
-                    </Link>
-                    <Link as={`/address/${tx.newowner2}`} href={`/address?id=${tx.newowner2}`} prefetch>
-                      <a>{tx.newowner2}</a>
-                    </Link>
-                  </AddressContainer>
-                ),
-                amount: (
-                  <div>
-                    <div style={{ marginBottom: '5px' }}>
-                      <span>{tx.amount1}</span> <span>{tx.token_symbol}</span>
-                    </div>
+                  ),
+                  block: tx.txblknum,
+                  from: (
+                    <AddressContainer>
+                      <Link as={`/address/${tx.spender1}`} href={`/address?id=${tx.spender1}`} prefetch>
+                        <a>{tx.spender1}</a>
+                      </Link>
+                      <Link as={`/address/${tx.spender2}`} href={`/address?id=${tx.spender2}`} prefetch>
+                        <a>{tx.spender2}</a>
+                      </Link>
+                    </AddressContainer>
+                  ),
+                  to: (
+                    <AddressContainer>
+                      <Link as={`/address/${tx.newowner1}`} href={`/address?id=${tx.newowner1}`} prefetch>
+                        <a>{tx.newowner1}</a>
+                      </Link>
+                      <Link as={`/address/${tx.newowner2}`} href={`/address?id=${tx.newowner2}`} prefetch>
+                        <a>{tx.newowner2}</a>
+                      </Link>
+                    </AddressContainer>
+                  ),
+                  amount: (
                     <div>
-                      <span>{tx.amount2}</span> <span>{tx.token_symbol}</span>
+                      <div style={{ marginBottom: '5px' }}>
+                        <span>{tx.amount1}</span> <span>{tx.token_symbol}</span>
+                      </div>
+                      <div>
+                        <span>{tx.amount2}</span> <span>{tx.token_symbol}</span>
+                      </div>
                     </div>
-                  </div>
-                ),
-                arrow: <Icon name='Arrow-Long-Right' />
-              }
-            })}
-          />
+                  ),
+                  arrow: <Icon name='Arrow-Long-Right' />
+                }
+              })}
+            />
+          ) : (
+            <Empty>There is no transaction here...</Empty>
+          )}
         </Card>
       </Container>
     )
