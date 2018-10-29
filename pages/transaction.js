@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { truncateId } from '../utils/truncate'
 import { getTransactionById } from '../services/transactionService'
 import _ from 'lodash'
+import Moment from 'moment'
 const Container = styled.div`
   max-width: 70%;
   margin: 50px auto 0 auto;
@@ -139,7 +140,10 @@ export default class transaction extends Component {
     return (
       <Card>
         <StyledCardHeader>
-          Transferred <span>{this.props.tx.amount1} {this.props.tx.token_symbol}</span>
+          Transferred{' '}
+          <span>
+            {this.props.tx.amount1} {this.props.tx.token_symbol}
+          </span>
         </StyledCardHeader>
         <CardContent>
           <div>
@@ -220,12 +224,18 @@ export default class transaction extends Component {
           <span>
             Ethereum Block height{' '}
             <Link href='/' prefetch>
-              <a>{this.props.tx.txblknum}</a>
+              <a>{this.props.tx.eth_height}</a>
             </Link>
           </span>
         </div>
         <div>
-          <Icon name='Time' /> <span>3 hrs. 23 mins ago | 3 hrs. 23 mins ago | 3 hrs. 23 mins ago</span>
+          <Icon name='Time' />
+          <span>
+            {' '}
+            {Moment(Date.now() - this.props.tx.timestamp).format('HH [hr] MM [mins] [ago]')}
+            {' | '}
+            {Moment(this.props.tx.timestamp).format('HH:MM:SS A | MMMM DD[,] YYYY')}
+          </span>
         </div>
       </FooterContainer>
     )

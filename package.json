@@ -32,6 +32,7 @@
     "eslint-plugin-react": "^7.11.1",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
+    "moment": "^2.22.2",
     "next": "^7.0.1",
     "next-images": "^1.0.1",
     "nodemon": "^1.18.4",

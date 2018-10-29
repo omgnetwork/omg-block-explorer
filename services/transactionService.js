@@ -4,7 +4,7 @@ import CONSTANT from '../constant'
 
 function formatTransaction (tx) {
   if (typeof tx === 'object') {
-    return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[tx.cur12] }
+    return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[tx.cur12], timestamp: Math.round(tx.timestamp * 1000) }
   }
   return tx
 }
