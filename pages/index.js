@@ -9,7 +9,7 @@ import Icon from '../components/Icon'
 import Moment from 'moment'
 const Container = styled.div`
   position: relative;
-  max-width: 70%;
+  max-width: 1200px;
   margin: 0 auto;
   padding-top: 50px;
   h4 {
@@ -112,7 +112,7 @@ export default class HomePage extends Component {
         {this.props.txs ? (
           <Card>
             <CardHeader>
-              <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 200 Records</span>
+              <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 200 transactions</span>
             </CardHeader>
             {this.props.txs.length > 0 ? (
               <Table

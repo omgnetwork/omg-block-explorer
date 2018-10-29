@@ -30,7 +30,7 @@ const Input = styled.input`
   width: 100%;
 `
 const InnerCointainer = styled.div`
-  max-width: 70%;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   height: 70px;

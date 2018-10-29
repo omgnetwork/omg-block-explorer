@@ -11,7 +11,7 @@ import { truncateId } from '../utils/truncate'
 import Moment from 'moment'
 const Container = styled.div`
   position: relative;
-  max-width: 70%;
+  max-width: 1200px;
   margin: 0 auto;
   padding-top: 50px;
   h4 {
@@ -139,7 +139,7 @@ export default class AddressPage extends Component {
         </TopContainer>
         <Card>
           <CardHeader>
-            <h4>TRANSACTIONS: </h4> <span>showing the latest 200 Records</span>
+            <h4>TRANSACTIONS: </h4> <span>showing the latest 200 transactions</span>
           </CardHeader>
           {this.props.txs.length > 0 ? (
             <Table
