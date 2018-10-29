@@ -232,7 +232,7 @@ export default class transaction extends Component {
           <Icon name='Time' />
           <span>
             {' '}
-            {Moment(Date.now() - this.props.tx.timestamp).format('HH [hr] MM [mins] [ago]')}
+            {Moment(this.props.tx.timestamp).fromNow()}
             {' | '}
             {Moment(this.props.tx.timestamp).format('HH:MM:SS A | MMMM DD[,] YYYY')}
           </span>

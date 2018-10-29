@@ -6,7 +6,7 @@ import Card, { CardHeader } from '../components/Card'
 import Table from '../components/Table'
 import Link from 'next/link'
 import Icon from '../components/Icon'
-
+import Moment from 'moment'
 const Container = styled.div`
   position: relative;
   max-width: 70%;
@@ -31,10 +31,10 @@ const Container = styled.div`
     th:first-child {
       padding-left: 20px;
     }
-    th:nth-child(4) {
+    th:nth-child(5) {
       width: 50px;
     }
-    td:nth-child(4) {
+    td:nth-child(5) {
       text-align: center;
       padding: 0;
       vertical-align: middle;
@@ -53,6 +53,10 @@ const columns = [
   {
     key: 'block',
     value: 'Block'
+  },
+  {
+    key: 'age',
+    value: 'Age'
   },
   {
     key: 'from',
@@ -85,7 +89,6 @@ const Empty = styled.div`
   text-align: center;
   padding: 50px;
   font-size: 32px;
-  
 `
 export default class HomePage extends Component {
   static propTypes = {
@@ -123,6 +126,7 @@ export default class HomePage extends Component {
                       </Link>
                     ),
                     block: tx.txblknum,
+                    age: Moment(tx.timestamp).fromNow(),
                     from: (
                       <AddressContainer>
                         <Link as={`/address/${tx.spender1}`} href={`/address?id=${tx.spender1}`} prefetch>
