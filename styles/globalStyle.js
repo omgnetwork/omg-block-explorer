@@ -26,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
 		display: block;
 	}
 	body {
-		line-height: 1;
+		line-height: 1.5;
 		font-family: Circular, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		color: #3C414D;
