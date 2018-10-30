@@ -112,14 +112,16 @@ export default class HomePage extends Component {
     txs: []
   }
   componentDidMount = () => {
-    setInterval(async () => {
+    this.intervalLoadTransaction = setInterval(async () => {
       const { data, success, error } = await getTransactions()
       if (success) {
         this.setState({ txs: data, success, error })
       }
     }, 1000)
   }
-
+  componentWillUnmount = () => {
+    clearInterval(this.intervalLoadTransaction)
+  }
   renderTable () {
     return (
       <div style={{ overflow: 'auto' }}>
