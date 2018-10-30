@@ -24,10 +24,12 @@ const Container = styled.div`
       width: 100%;
     }
     td > div,
-    a {
+    a,
+    div {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      line-height: 1.2;
     }
     td:first-child,
     th:first-child {
@@ -69,7 +71,6 @@ const Empty = styled.div`
   text-align: center;
   padding: 50px;
   font-size: 32px;
-  
 `
 const columns = [
   {
