@@ -132,7 +132,7 @@ export default class AddressPage extends Component {
   }
   componentDidMount = () => {
     setInterval(async () => {
-      const { data, success, error } = await getTransactions({ address: this.props.query })
+      const { data, success, error } = await getTransactions({ address: this.props.query.id })
       if (success) {
         this.setState({ txs: data, success, error })
       }
