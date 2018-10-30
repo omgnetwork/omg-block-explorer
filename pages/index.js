@@ -122,7 +122,7 @@ export default class HomePage extends Component {
         {this.props.txs ? (
           <Card>
             <CardHeader>
-              <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 200 transactions</span>
+              <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 50 transactions</span>
             </CardHeader>
             {this.props.txs.length > 0 ? (
               <Table

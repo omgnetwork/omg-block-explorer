@@ -147,7 +147,7 @@ export default class AddressPage extends Component {
         </TopContainer>
         <Card>
           <CardHeader>
-            <h4>TRANSACTIONS: </h4> <span>showing the latest 200 transactions</span>
+            <h4>TRANSACTIONS: </h4> <span>showing the latest 50 transactions</span>
           </CardHeader>
           {this.props.txs.length > 0 ? (
             <Table
