@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Dropdown from '../components/Dropdown'
-import Icon from './Icon'
 import Link from 'next/link'
 import Router from 'next/router'
 const Container = styled.div`
@@ -11,15 +8,6 @@ const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
-`
-const DropdownContainer = styled.div`
-  margin-left: auto;
-  position: relative;
-  cursor: pointer;
-  span,
-  i {
-    vertical-align: middle;
-  }
 `
 const Input = styled.input`
   margin-left: auto;
@@ -36,8 +24,14 @@ const InnerCointainer = styled.div`
   display: flex;
   height: 70px;
   align-items: center;
+  @media screen and (max-width: 450px) {
+    height: 60px;
+  }
   img {
     cursor: pointer;
+    @media screen and (max-width: 450px) {
+      max-width: 100px;
+    }
   }
   form {
     box-sizing: border-box;
@@ -46,6 +40,9 @@ const InnerCointainer = styled.div`
     width: 100%;
     input {
       box-sizing: border-box;
+    }
+    @media screen and (max-width: 450px) {
+      max-width: 50vw;
     }
   }
 `
@@ -73,19 +70,8 @@ export default class NavBar extends Component {
           <Link href='/'>
             <img src={require('../statics/images/omisego-blue.svg')} />
           </Link>
-          {/* <Dropdown
-            data={['TESUJI']}
-            render={({ open, dropdownBox, onClickButton }) => {
-              return (
-                <DropdownContainer onClick={onClickButton}>
-                  <h1><span>TESUJI</span> {!open ? <Icon name='Chevron-Down' /> : <Icon name='Chevron-Up' />}</h1>{' '}
-                  {open && dropdownBox}
-                </DropdownContainer>
-              )
-            }}
-          /> */}
           <form onSubmit={this.onSearch}>
-            <Input placeholder='Search tx or address' ref={input => this.input = input} />
+            <Input placeholder='Search tx or address' ref={input => (this.input = input)} />
           </form>
         </InnerCointainer>
       </Container>
