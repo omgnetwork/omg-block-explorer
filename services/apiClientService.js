@@ -17,5 +17,5 @@ export function handleError (error) {
 
 export const instance = axios.create({
   baseURL: CONFIG.API_URL,
-  timeout: 1000
+  timeout: 5000
 })

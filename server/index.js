@@ -6,6 +6,7 @@ import http from 'http'
 
 import apiRoute from './routes/api'
 import compression from 'compression'
+import morgan from 'morgan'
 const nextApp = next({ dev: process.env.NODE_ENV !== 'production' })
 
 const expressApp = express()
@@ -18,6 +19,8 @@ const PORT = 3000
 if (process.env.NODE_ENV === 'production') {
   expressApp.use(compression())
 }
+
+expressApp.use(morgan('dev'))
 
 expressApp.use(bodyParser.json())
 

@@ -29,7 +29,6 @@ const Container = styled.div`
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      line-height: 1.2;
     }
     td:first-child,
     th:first-child {
