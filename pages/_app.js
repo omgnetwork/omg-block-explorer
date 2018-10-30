@@ -44,7 +44,7 @@ export default class MyApp extends App {
           <GlobalStyle />
           <Loading show={this.state.loading} color='#1A56F0' />
           <NavBar />
-          <div style={{ padding: '70px 5%' }}>
+          <div style={{ padding: '70px 5%', overflow: 'hidden' }}>
             <Component {...pageProps} />
           </div>
         </Container>

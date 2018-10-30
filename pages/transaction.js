@@ -20,6 +20,10 @@ const Container = styled.div`
 const CardContent = styled.div`
   display: flex;
   padding: 30px;
+  overflow: auto;
+  @media screen and (max-width: 600px) {
+    width: 1000px;
+  }
   > div {
     flex: 1 1 auto;
   }
@@ -65,6 +69,9 @@ const SmallTxText = styled.div`
   font-size: 12px;
   color: ${props => props.theme.colors.B100};
   margin-bottom: 20px;
+  @media screen and (max-width: 600px) {
+    font-size: 9px;
+  }
 `
 const ArrowContainer = styled.div`
   text-align: center;
@@ -145,53 +152,55 @@ export default class transaction extends Component {
             {this.props.tx.amount1} {this.props.tx.token_symbol}
           </span>
         </StyledCardHeader>
-        <CardContent>
-          <div>
-            <h4>From</h4>
-            <Table
-              columns={[{ key: 'address', value: 'address' }]}
-              dataSource={[
-                {
-                  key: this.props.tx.spender1,
-                  address: (
-                    <Link as={`/address/${this.props.tx.spender1}`} href={`/address?id=${this.props.tx.spender1}`} prefetch>
-                      <a>{this.props.tx.spender1}</a>
-                    </Link>
-                  )
-                }
-              ]}
-            />
-          </div>
-          <ArrowContainer>
-            <Icon name='Arrow-Right' />
-          </ArrowContainer>
-          <div>
-            <h4>To</h4>
-            <Table
-              columns={columns}
-              dataSource={[
-                {
-                  key: this.props.tx.newowner1,
-                  address: (
-                    <Link as={`/address/${this.props.tx.newowner1}`} href={`/address?id=${this.props.tx.newowner1}`} prefetch>
-                      <a>{this.props.tx.newowner1}</a>
-                    </Link>
-                  ),
-                  amount: `${this.props.tx.amount1} ${this.props.tx.token_symbol}`
-                },
-                {
-                  key: this.props.tx.newowner2,
-                  address: (
-                    <Link as={`/address/${this.props.tx.newowner2}`} href={`/address?id=${this.props.tx.newowner2}`} prefetch>
-                      <a>{this.props.tx.newowner2}</a>
-                    </Link>
-                  ),
-                  amount: `${this.props.tx.amount2} ${this.props.tx.token_symbol}`
-                }
-              ]}
-            />
-          </div>
-        </CardContent>
+        <div style={{ overflow: 'auto' }}>
+          <CardContent>
+            <div>
+              <h4>From</h4>
+              <Table
+                columns={[{ key: 'address', value: 'address' }]}
+                dataSource={[
+                  {
+                    key: this.props.tx.spender1,
+                    address: (
+                      <Link as={`/address/${this.props.tx.spender1}`} href={`/address?id=${this.props.tx.spender1}`} prefetch>
+                        <a>{this.props.tx.spender1}</a>
+                      </Link>
+                    )
+                  }
+                ]}
+              />
+            </div>
+            <ArrowContainer>
+              <Icon name='Arrow-Right' />
+            </ArrowContainer>
+            <div>
+              <h4>To</h4>
+              <Table
+                columns={columns}
+                dataSource={[
+                  {
+                    key: this.props.tx.newowner1,
+                    address: (
+                      <Link as={`/address/${this.props.tx.newowner1}`} href={`/address?id=${this.props.tx.newowner1}`} prefetch>
+                        <a>{this.props.tx.newowner1}</a>
+                      </Link>
+                    ),
+                    amount: `${this.props.tx.amount1} ${this.props.tx.token_symbol}`
+                  },
+                  {
+                    key: this.props.tx.newowner2,
+                    address: (
+                      <Link as={`/address/${this.props.tx.newowner2}`} href={`/address?id=${this.props.tx.newowner2}`} prefetch>
+                        <a>{this.props.tx.newowner2}</a>
+                      </Link>
+                    ),
+                    amount: `${this.props.tx.amount2} ${this.props.tx.token_symbol}`
+                  }
+                ]}
+              />
+            </div>
+          </CardContent>
+        </div>
       </Card>
     )
   }
