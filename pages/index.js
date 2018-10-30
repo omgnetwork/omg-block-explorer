@@ -22,7 +22,8 @@ const Container = styled.div`
       width: 100%;
     }
     td > div,
-    a,div {
+    a,
+    div {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -106,6 +107,15 @@ export default class HomePage extends Component {
   static defaultProps = {
     txs: []
   }
+  componentDidMount = () => {
+    setInterval(async () => {
+      const { data, success, error } = await getTransactions()
+      if (success) {
+        this.setState({ txs: data, success, error })
+      }
+    }, 1000)
+  }
+
   render () {
     return (
       <Container>

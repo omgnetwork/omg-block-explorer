@@ -4,7 +4,7 @@ import CONSTANT from '../constant'
 
 function formatTransaction (tx) {
   if (typeof tx === 'object') {
-    return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[tx.cur12], timestamp: Math.round(tx.timestamp * 1000) }
+    return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[`0x${tx.cur12.toLowerCase()}`], timestamp: Math.round(tx.timestamp * 1000) }
   }
   return tx
 }
@@ -17,7 +17,7 @@ export function getTransactionById (transactionId) {
     .catch(handleError)
 }
 
-export function getTransactions ({ address, limit = 200 } = {}) {
+export function getTransactions ({ address, limit = 50 } = {}) {
   const query = queryString.stringify({ address, limit })
   return instance
     .get(`/transactions${query ? `?${query}` : ''}`)

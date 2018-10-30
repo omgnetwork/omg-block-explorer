@@ -127,6 +127,14 @@ export default class AddressPage extends Component {
   static defaultProps = {
     txs: []
   }
+  componentDidMount = () => {
+    setInterval(async () => {
+      const { data, success, error } = await getTransactions({ address: this.props.query })
+      if (success) {
+        this.setState({ txs: data, success, error })
+      }
+    }, 1000)
+  }
   render () {
     return (
       <Container>
