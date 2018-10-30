@@ -57,7 +57,7 @@ const GlobalStyle = createGlobalStyle`
 		color: ${props => props.theme.colors.BL400};
 	}
 	
-	input {
+	input,button {
 		outline: none; 
 	}
 	

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import Router from 'next/router'
+import Icon from '../components/Icon'
 const Container = styled.div`
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
   position: absolute;
@@ -10,8 +11,7 @@ const Container = styled.div`
   right: 0;
 `
 const Input = styled.input`
-  margin-left: auto;
-  border-radius: 5px;
+  border-radius: 5px 0 0 5px;
   box-shadow: none;
   border: 1px solid ${props => props.theme.colors.S400};
   padding: 10px;
@@ -38,8 +38,22 @@ const InnerCointainer = styled.div`
     margin-left: auto;
     max-width: 300px;
     width: 100%;
+    display: flex;
     input {
       box-sizing: border-box;
+    }
+    > button {
+      font-size: 16px;
+      line-height: 37px;
+      text-align: center;
+      width: 50px;
+      display: inline-block;
+      vertical-align: middle;
+      background-color: ${props => props.theme.colors.B300};
+      color: white;
+      border-radius: 0 5px 5px 0;
+      border: 1px solid ${props => props.theme.colors.B300};
+      cursor: pointer;
     }
     @media screen and (max-width: 450px) {
       max-width: 50vw;
@@ -72,6 +86,9 @@ export default class NavBar extends Component {
           </Link>
           <form onSubmit={this.onSearch}>
             <Input placeholder='Search tx or address' ref={input => (this.input = input)} />
+            <button>
+              <Icon name='Search' />
+            </button>
           </form>
         </InnerCointainer>
       </Container>
