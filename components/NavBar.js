@@ -32,6 +32,7 @@ const Input = styled.input`
 const InnerCointainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 5%;
   display: flex;
   height: 70px;
   align-items: center;
@@ -39,9 +40,13 @@ const InnerCointainer = styled.div`
     cursor: pointer;
   }
   form {
+    box-sizing: border-box;
     margin-left: auto;
     max-width: 300px;
     width: 100%;
+    input {
+      box-sizing: border-box;
+    }
   }
 `
 

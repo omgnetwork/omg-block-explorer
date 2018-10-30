@@ -22,7 +22,7 @@ const Container = styled.div`
       width: 100%;
     }
     td > div,
-    a {
+    a,div {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
