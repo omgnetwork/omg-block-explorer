@@ -13,14 +13,22 @@ export default class MyDocument extends Document {
     return (
       <html>
         <title>OmiseGO Explorer</title>
-        <Head>{this.props.styleTags}</Head>
+        <Head>
+          {this.props.styleTags}
+          <script async src='https://www.googletagmanager.com/gtag/js?id=UA-61493976-4' />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `  window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'UA-61493976-4');`
+            }}
+          />
+        </Head>
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href={require('../statics/images/favicon.png')} type='image/x-icon' />
         <link rel='shortcut icon' href={require('../statics/images/favicon.png')} type='image/x-icon' />
-        <link
-          rel='stylesheet'
-          href='https://cdn.omise.co/assets/fonts/CircularStd-Black/fonts.css'
-        />
+        <link rel='stylesheet' href='https://cdn.omise.co/assets/fonts/CircularStd-Black/fonts.css' />
         <link rel='stylesheet' href='https://cdn.omise.co/fonts/circular.css' />
         <body>
           <Main />
