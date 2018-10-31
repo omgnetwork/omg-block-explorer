@@ -18,9 +18,13 @@ export function getTransactionById (transactionId) {
 }
 
 export function getTransactions ({ address, limit = 50 } = {}) {
-  const query = queryString.stringify({ address, limit })
+  let query = { limit }
+  if (address) {
+    query = Object.assign(query, { address })
+  }
+  const qs = queryString.stringify(query)
   return instance
-    .get(`/transactions${query ? `?${query}` : ''}`)
+    .get(`/transactions${qs ? `?${qs}` : ''}`)
     .then(handleResponse)
     .then(response => ({ ...response, data: response.data.map(tx => formatTransaction(tx)) }))
     .catch(handleError)

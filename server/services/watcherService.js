@@ -8,9 +8,13 @@ export function getTransactionById (transactionId) {
 }
 
 export function getTransactions ({ address, limit = 50 } = {}) {
-  const query = queryString.stringify({ address: address && `0x${String(address).toLocaleLowerCase()}`, limit })
+  let query = { limit }
+  if (address) {
+    query = Object.assign(query, { address: address && `0x${String(address).toLocaleLowerCase()}` })
+  }
+  const qs = queryString.stringify(query)
   return instance
-    .get(`/transactions${query ? `?${query}` : ''}`)
+    .get(`/transactions${qs ? `?${qs}` : ''}`)
     .then(handleResponse)
     .catch(handleError)
 }

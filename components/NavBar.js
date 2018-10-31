@@ -65,20 +65,22 @@ export default class NavBar extends Component {
   onSearch = e => {
     e.preventDefault()
     let value = this.input.value
-    if (value.slice(0, 2) === '0x') {
-      value = value.slice(2).toUpperCase()
+    if (value) {
+      if (value.slice(0, 2) === '0x') {
+        value = value.slice(2).toUpperCase()
+      }
+      switch (value.length) {
+        case 64:
+          Router.push(`/transaction?id=${value}`, `/transaction/${value}`)
+          break
+        case 40:
+          Router.push(`/address?id=${value}`, `/address/${value}`)
+          break
+        default:
+          Router.push(`/address?id=${value}`, `/address/${value}`)
+      }
+      this.input.blur()
     }
-    switch (value.length) {
-      case 64:
-        Router.push(`/transaction?id=${value}`, `/transaction/${value}`)
-        break
-      case 40:
-        Router.push(`/address?id=${value}`, `/address/${value}`)
-        break
-      default:
-        Router.push(`/address?id=${value}`, `/address/${value}`)
-    }
-    this.input.blur()
   }
   render () {
     return (
