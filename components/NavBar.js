@@ -85,7 +85,7 @@ export default class NavBar extends Component {
       <Container>
         <InnerCointainer>
           <Link href='/'>
-            <img src={require('../statics/images/omisego-blue.svg')} />
+            <a><img src={require('../statics/images/omisego-blue.svg')} /></a>
           </Link>
           <form onSubmit={this.onSearch}>
             <Input placeholder='Search tx or address' ref={input => (this.input = input)} />
