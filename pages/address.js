@@ -21,6 +21,12 @@ const Container = styled.div`
     text-align: left;
     @media screen and (max-width: 600px) {
       width: 800px;
+      td:nth-child(2),
+      td:nth-child(5),
+      th:nth-child(2),
+      th:nth-child(5) {
+        display: none;
+      }
     }
     a {
       display: block;
