@@ -104,7 +104,8 @@ const Empty = styled.div`
 export default class HomePage extends Component {
   static propTypes = {
     txs: PropTypes.array,
-    error: PropTypes.string
+    error: PropTypes.string,
+    success: PropTypes.bool
   }
   static async getInitialProps (context) {
     try {
@@ -116,6 +117,10 @@ export default class HomePage extends Component {
   }
   static defaultProps = {
     txs: []
+  }
+  constructor (props) {
+    super(props)
+    this.state = { txs: this.props.txs, success: this.props.success, error: this.props.error }
   }
   componentDidMount = () => {
     this.intervalLoadTransaction = setInterval(async () => {
@@ -133,7 +138,7 @@ export default class HomePage extends Component {
       <div style={{ overflow: 'auto' }}>
         <Table
           columns={columns}
-          dataSource={this.props.txs.map(tx => {
+          dataSource={this.state.txs.map(tx => {
             return {
               key: tx.txid,
               tx: (
@@ -184,15 +189,15 @@ export default class HomePage extends Component {
   render () {
     return (
       <Container>
-        {this.props.txs ? (
+        {this.state.txs ? (
           <Card>
             <CardHeader>
               <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 50 transactions</span>
             </CardHeader>
-            {this.props.txs.length > 0 ? this.renderTable() : <Empty>There is no transaction here...</Empty>}
+            {this.state.txs.length > 0 ? this.renderTable() : <Empty>There is no transaction here...</Empty>}
           </Card>
         ) : (
-          <Error>{this.props.error}</Error>
+          <Error>{this.state.error}</Error>
         )}
       </Container>
     )
