@@ -22,6 +22,9 @@ module.exports = compose(
       ]
     })
     return config
+  },
+  generateBuildId: async () => {
+    return 'cbe169bfc7a979ff7652da381197c1bdd868b47c'
   }
 })
 
