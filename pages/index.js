@@ -122,17 +122,17 @@ export default class HomePage extends Component {
     super(props)
     this.state = { txs: this.props.txs, success: this.props.success, error: this.props.error }
   }
-  componentDidMount = () => {
-    this.intervalLoadTransaction = setInterval(async () => {
-      const { data, success, error } = await getTransactions()
-      if (success) {
-        this.setState({ txs: data, success, error })
-      }
-    }, 1000)
-  }
-  componentWillUnmount = () => {
-    clearInterval(this.intervalLoadTransaction)
-  }
+  // componentDidMount = () => {
+  //   this.intervalLoadTransaction = setInterval(async () => {
+  //     const { data, success, error } = await getTransactions()
+  //     if (success) {
+  //       this.setState({ txs: data, success, error })
+  //     }
+  //   }, 1000)
+  // }
+  // componentWillUnmount = () => {
+  //   clearInterval(this.intervalLoadTransaction)
+  // }
   renderTable () {
     return (
       <div style={{ overflow: 'auto' }}>

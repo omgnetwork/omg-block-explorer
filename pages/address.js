@@ -144,17 +144,17 @@ export default class AddressPage extends Component {
     this.state = { txs: this.props.txs, success: this.props.success, error: this.props.error }
   }
 
-  componentDidMount = () => {
-    this.intervalLoadTransaction = setInterval(async () => {
-      const { data, success, error } = await getTransactions({ address: this.props.query.id })
-      if (success) {
-        this.setState({ txs: data, success, error })
-      }
-    }, 1000)
-  }
-  componentWillUnmount = () => {
-    clearInterval(this.intervalLoadTransaction)
-  }
+  // componentDidMount = () => {
+  //   this.intervalLoadTransaction = setInterval(async () => {
+  //     const { data, success, error } = await getTransactions({ address: this.props.query.id })
+  //     if (success) {
+  //       this.setState({ txs: data, success, error })
+  //     }
+  //   }, 1000)
+  // }
+  // componentWillUnmount = () => {
+  //   clearInterval(this.intervalLoadTransaction)
+  // }
 
   render () {
     return (

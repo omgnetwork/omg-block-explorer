@@ -17,7 +17,7 @@ const nextRequestHandler = nextApp.getRequestHandler()
 
 const ssrCache = new LRUCache({
   max: 100,
-  maxAge: 1000 * 10
+  maxAge: 1000 * 30
 })
 
 const PORT = 3000
