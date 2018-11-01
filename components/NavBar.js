@@ -29,7 +29,10 @@ const InnerCointainer = styled.div`
   }
   img {
     cursor: pointer;
+    max-width: 120px;
+    margin-top: 10px;
     @media screen and (max-width: 450px) {
+      margin-top: 5px;
       max-width: 100px;
     }
   }
@@ -87,7 +90,7 @@ export default class NavBar extends Component {
       <Container>
         <InnerCointainer>
           <Link href='/'>
-            <a><img src={require('../statics/images/omisego-blue.svg')} /></a>
+            <a><img src={require('../statics/images/omisego-blue.png')} /></a>
           </Link>
           <form onSubmit={this.onSearch}>
             <Input placeholder='Search tx or address' ref={input => (this.input = input)} />
