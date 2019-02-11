@@ -4,9 +4,14 @@ import CONSTANT from '../constant'
 
 function formatTransaction (tx) {
   if (typeof tx === 'object') {
-    currency = tx.results[0].currency
-    // return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[`0x${tx.txhash.toLowerCase()}`], timestamp: Math.round(tx.timestamp * 1000) }
-    return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[currency], timestamp: Math.round(tx.block.timestamp * 1000) }
+    return {
+      txid: tx.txhash,
+      inputs: tx.inputs,
+      outputs: tx.outputs,
+      txblknum: tx.block.blknum,
+      eth_height: tx.block.eth_height,
+      timestamp: Math.round(tx.block.timestamp * 1000)
+    }
   }
   return tx
 }

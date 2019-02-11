@@ -148,26 +148,29 @@ export default class transaction extends Component {
       <Card>
         <StyledCardHeader>
           Transferred{' '}
-          <span>
-            {this.props.tx.amount1} {this.props.tx.token_symbol}
-          </span>
+          {this.props.tx.inputs.map((input, index) => (
+            <span key={index}>
+              {input.amount} {input.token_symbol}
+            </span>
+          ))}
         </StyledCardHeader>
         <div style={{ overflow: 'auto' }}>
           <CardContent>
             <div>
               <h4>From</h4>
               <Table
-                columns={[{ key: 'address', value: 'address' }]}
-                dataSource={[
+                columns={columns}
+                dataSource={this.props.tx.inputs.map(io => (
                   {
-                    key: this.props.tx.spender1,
+                    key: io.owner,
                     address: (
-                      <Link as={`/address/${this.props.tx.spender1}`} href={`/address?id=${this.props.tx.spender1}`} prefetch>
-                        <a>{this.props.tx.spender1}</a>
+                      <Link as={`/address/${io.owner}`} href={`/address?id=${io.owner}`} prefetch>
+                        <a>{io.owner}</a>
                       </Link>
-                    )
+                    ),
+                    amount: `${io.amount} ${io.token_symbol}`
                   }
-                ]}
+                ))}
               />
             </div>
             <ArrowContainer>
@@ -177,26 +180,17 @@ export default class transaction extends Component {
               <h4>To</h4>
               <Table
                 columns={columns}
-                dataSource={[
+                dataSource={this.props.tx.outputs.map(io => (
                   {
-                    key: this.props.tx.newowner1,
+                    key: io.owner,
                     address: (
-                      <Link as={`/address/${this.props.tx.newowner1}`} href={`/address?id=${this.props.tx.newowner1}`} prefetch>
-                        <a>{this.props.tx.newowner1}</a>
+                      <Link as={`/address/${io.owner}`} href={`/address?id=${io.owner}`} prefetch>
+                        <a>{io.owner}</a>
                       </Link>
                     ),
-                    amount: `${this.props.tx.amount1} ${this.props.tx.token_symbol}`
-                  },
-                  {
-                    key: this.props.tx.newowner2,
-                    address: (
-                      <Link as={`/address/${this.props.tx.newowner2}`} href={`/address?id=${this.props.tx.newowner2}`} prefetch>
-                        <a>{this.props.tx.newowner2}</a>
-                      </Link>
-                    ),
-                    amount: `${this.props.tx.amount2} ${this.props.tx.token_symbol}`
+                    amount: `${io.amount} ${io.token_symbol}`
                   }
-                ]}
+                ))}
               />
             </div>
           </CardContent>

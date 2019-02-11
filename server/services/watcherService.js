@@ -2,8 +2,13 @@ import { instance, handleError, handleResponse } from './apiClientService'
 import queryString from 'query-string'
 
 export function getTransactionById (transactionId) {
+  const query = {id: transactionId}
   return instance
-    .get(`/transaction/${transactionId}`)
+    .post(`/transaction.get`, query, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
     .then(handleResponse)
     .catch(handleError)
 }

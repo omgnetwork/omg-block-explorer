@@ -2,7 +2,8 @@ import axios from 'axios'
 import CONFIG from '../config'
 
 export function handleResponse (response) {
-  return { success: response.data.result === 'success', data: response.data.data }
+  console.log(response.data.data)
+  return { success: response.data.success, data: response.data.data }
 }
 
 export function handleError (error) {
