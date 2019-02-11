@@ -4,7 +4,22 @@ import CONSTANT from '../constant'
 
 function formatTransaction (tx) {
   if (typeof tx === 'object') {
-    return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[`0x${tx.cur12.toLowerCase()}`], timestamp: Math.round(tx.timestamp * 1000) }
+    currency = tx.results[0].currency
+    // return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[`0x${tx.txhash.toLowerCase()}`], timestamp: Math.round(tx.timestamp * 1000) }
+    return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[currency], timestamp: Math.round(tx.block.timestamp * 1000) }
+  }
+  return tx
+}
+
+function formatTransactionAll (tx) {
+  if (typeof tx === 'object') {
+    // return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[`0x${tx.txhash.toLowerCase()}`], timestamp: Math.round(tx.timestamp * 1000) }
+    return {
+      txid: tx.txhash,
+      txblknum: tx.block.blknum,
+      timestamp: Math.round(tx.block.timestamp * 1000),
+      amounts: tx.results
+    }
   }
   return tx
 }
@@ -26,6 +41,6 @@ export function getTransactions ({ address, limit = 50 } = {}) {
   return instance
     .get(`/transactions${qs ? `?${qs}` : ''}`)
     .then(handleResponse)
-    .then(response => ({ ...response, data: response.data.map(tx => formatTransaction(tx)) }))
+    .then(response => ({ ...response, data: response.data.map(tx => formatTransactionAll(tx)) }))
     .catch(handleError)
 }
