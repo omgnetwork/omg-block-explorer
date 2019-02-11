@@ -94,18 +94,6 @@ const columns = [
     value: 'Age'
   },
   {
-    key: 'from',
-    value: 'From'
-  },
-  {
-    key: 'arrow',
-    value: ''
-  },
-  {
-    key: 'to',
-    value: 'To'
-  },
-  {
     key: 'amount',
     value: 'Value transacted'
   }
@@ -184,34 +172,13 @@ export default class AddressPage extends Component {
                     ),
                     block: tx.txblknum,
                     age: Moment(tx.timestamp).fromNow(),
-                    from: (
-                      <AddressContainer>
-                        <Link as={`/address/${tx.spender1}`} href={`/address?id=${tx.spender1}`} prefetch>
-                          <a>{tx.spender1}</a>
-                        </Link>
-                        <Link as={`/address/${tx.spender2}`} href={`/address?id=${tx.spender2}`} prefetch>
-                          <a>{tx.spender2}</a>
-                        </Link>
-                      </AddressContainer>
-                    ),
-                    to: (
-                      <AddressContainer>
-                        <Link as={`/address/${tx.newowner1}`} href={`/address?id=${tx.newowner1}`} prefetch>
-                          <a>{tx.newowner1}</a>
-                        </Link>
-                        <Link as={`/address/${tx.newowner2}`} href={`/address?id=${tx.newowner2}`} prefetch>
-                          <a>{tx.newowner2}</a>
-                        </Link>
-                      </AddressContainer>
-                    ),
                     amount: (
                       <div>
-                        <div style={{ marginBottom: '5px' }}>
-                          <span>{tx.amount1}</span> <span>{tx.token_symbol}</span>
-                        </div>
-                        <div>
-                          <span>{tx.amount2}</span> <span>{tx.token_symbol}</span>
-                        </div>
+                        {tx.amounts.map((amount, index) => (
+                          <div key={index} style={{ marginBottom: '5px' }}>
+                            <span>{amount.value}</span> <span>{amount.token_symbol}</span>
+                          </div>
+                        ))}
                       </div>
                     ),
                     arrow: <Icon name='Arrow-Long-Right' />
