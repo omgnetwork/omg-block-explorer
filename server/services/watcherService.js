@@ -16,7 +16,6 @@ export function getTransactionById (transactionId) {
 export function getTransactions ({ address, limit = 50 } = {}) {
   let query = { limit: parseInt(limit) }
   if (address) {
-    // query = Object.assign(query, { address: address && `0x${String(address).toLocaleLowerCase()}` })
     query = Object.assign(query, { address: address })
   }
   return instance

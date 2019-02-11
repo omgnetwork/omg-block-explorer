@@ -2,7 +2,6 @@ import axios from 'axios'
 import CONFIG from '../config'
 
 export function handleResponse (response) {
-  console.log(response.data.data)
   return { success: response.data.success, data: response.data.data }
 }
 
