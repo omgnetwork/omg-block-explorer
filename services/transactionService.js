@@ -11,14 +11,21 @@ function formatTransaction (tx) {
   return tx
 }
 
+function formatAmount (amount) {
+  return {
+    value: amount.value,
+    token_symbol: CONSTANT.contractTokenAddressMap[amount.currency]
+  }
+}
+
 function formatTransactionAll (tx) {
   if (typeof tx === 'object') {
-    // return { ...tx, token_symbol: CONSTANT.contractTokenAddressMap[`0x${tx.txhash.toLowerCase()}`], timestamp: Math.round(tx.timestamp * 1000) }
+    const amounts = tx.results.map(amount => formatAmount(amount))
     return {
       txid: tx.txhash,
       txblknum: tx.block.blknum,
       timestamp: Math.round(tx.block.timestamp * 1000),
-      amounts: tx.results
+      amounts: amounts
     }
   }
   return tx
