@@ -69,14 +69,11 @@ export default class NavBar extends Component {
     e.preventDefault()
     let value = this.input.value
     if (value) {
-      if (value.slice(0, 2) === '0x') {
-        value = value.slice(2).toUpperCase()
-      }
       switch (value.length) {
-        case 64:
+        case 66:
           Router.push(`/transaction?id=${value}`, `/transaction/${value}`)
           break
-        case 40:
+        case 42:
           Router.push(`/address?id=${value}`, `/address/${value}`)
           break
         default:
