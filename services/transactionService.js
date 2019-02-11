@@ -6,14 +6,20 @@ function formatTransaction (tx) {
   if (typeof tx === 'object') {
     return {
       txid: tx.txhash,
-      inputs: tx.inputs,
-      outputs: tx.outputs,
+      inputs: formatInputsOutputs(tx.inputs),
+      outputs: formatInputsOutputs(tx.outputs),
       txblknum: tx.block.blknum,
       eth_height: tx.block.eth_height,
       timestamp: Math.round(tx.block.timestamp * 1000)
     }
   }
   return tx
+}
+
+function formatInputsOutputs (inputsOutputs) {
+  return inputsOutputs.map(io => (
+    { ...io, token_symbol: CONSTANT.contractTokenAddressMap[io.currency]}
+  ))
 }
 
 function formatAmount (amount) {
