@@ -1,5 +1,5 @@
+/* eslint-disable import/first */
 import next from 'next'
-
 import express from 'express'
 import bodyParser from 'body-parser'
 import http from 'http'
@@ -7,6 +7,7 @@ import http from 'http'
 import apiRoute from './routes/api'
 import compression from 'compression'
 import morgan from 'morgan'
+
 const nextApp = next({ dev: process.env.NODE_ENV !== 'production' })
 const LRUCache = require('lru-cache')
 
@@ -17,7 +18,7 @@ const nextRequestHandler = nextApp.getRequestHandler()
 
 const ssrCache = new LRUCache({
   max: 100,
-  maxAge: 1000 * 30
+  maxAge: 1000 * 5
 })
 
 const PORT = 3000
@@ -32,20 +33,20 @@ expressApp.use(bodyParser.json())
 
 expressApp.use('/api', apiRoute)
 
-expressApp.get('/transaction/:id', (req, res) => {
-  const params = { id: req.params.id }
-  return renderAndCache(req, res, '/transaction', params)
-})
-expressApp.get('/address/:id', (req, res) => {
-  const params = { id: req.params.id }
-  return renderAndCache(req, res, '/address', params)
-})
-
-expressApp.get('/', (req, res) => {
-  return renderAndCache(req, res, '/')
-})
-
 nextApp.prepare().then(() => {
+  expressApp.get('/transaction/:id', (req, res) => {
+    const params = { id: req.params.id }
+    return renderAndCache(req, res, '/transaction', params)
+  })
+  expressApp.get('/address/:id', (req, res) => {
+    const params = { id: req.params.id }
+    return renderAndCache(req, res, '/address', params)
+  })
+
+  expressApp.get('/', (req, res) => {
+    return renderAndCache(req, res, '/')
+  })
+
   expressApp.get('*', (req, res) => {
     return nextRequestHandler(req, res)
   })

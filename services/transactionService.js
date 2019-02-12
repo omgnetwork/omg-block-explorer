@@ -17,9 +17,10 @@ function formatTransaction (tx) {
 }
 
 function formatInputsOutputs (inputsOutputs) {
-  return inputsOutputs.map(io => (
-    { ...io, token_symbol: CONSTANT.contractTokenAddressMap[io.currency]}
-  ))
+  return inputsOutputs.map(io => ({
+    ...io,
+    token_symbol: CONSTANT.contractTokenAddressMap[io.currency]
+  }))
 }
 
 function formatAmount (amount) {
