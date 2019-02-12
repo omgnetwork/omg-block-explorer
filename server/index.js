@@ -1,12 +1,14 @@
 /* eslint-disable import/first */
-import next from 'next'
-import express from 'express'
-import bodyParser from 'body-parser'
-import http from 'http'
+console.log('Initializing app...')
+require('dotenv').config()
+const next = require('next')
+const express = require('express')
+const bodyParser = require('body-parser')
+const http = require('http')
 
-import apiRoute from './routes/api'
-import compression from 'compression'
-import morgan from 'morgan'
+const apiRoute = require('./routes/api')
+const compression = require('compression')
+const morgan = require('morgan')
 
 const nextApp = next({ dev: process.env.NODE_ENV !== 'production' })
 const LRUCache = require('lru-cache')

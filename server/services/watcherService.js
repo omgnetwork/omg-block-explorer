@@ -1,6 +1,6 @@
-import { instance, handleError, handleResponse } from './apiClientService'
+const { instance, handleError, handleResponse } = require('./apiClientService')
 
-export function getTransactionById (transactionId) {
+function getTransactionById (transactionId) {
   const query = { id: transactionId }
   return instance
     .post('/transaction.get', query, {
@@ -12,7 +12,7 @@ export function getTransactionById (transactionId) {
     .catch(handleError)
 }
 
-export function getTransactions ({ address, limit = 50 } = {}) {
+function getTransactions ({ address, limit = 50 } = {}) {
   let query = { limit: parseInt(limit) }
   if (address) {
     query = Object.assign(query, { address: address })
@@ -25,4 +25,8 @@ export function getTransactions ({ address, limit = 50 } = {}) {
     })
     .then(handleResponse)
     .catch(handleError)
+}
+
+module.exports = {
+  getTransactionById, getTransactions
 }
