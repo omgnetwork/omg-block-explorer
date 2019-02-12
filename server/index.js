@@ -1,6 +1,12 @@
 /* eslint-disable import/first */
 console.log('Initializing app...')
 require('dotenv').config()
+
+const invariant = require('invariant')
+const CONFIG = require('./config')
+invariant(process.env.ETHERSCAN_URL, 'Missing etherscan url in environment.')
+console.log('Watcher url is:', CONFIG.WATCHER_URL)
+
 const next = require('next')
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -70,7 +76,7 @@ async function renderAndCache (req, res, pagePath, queryParams) {
 
   if (ssrCache.has(key)) {
     res.setHeader('x-cache', 'HIT')
-    console.log('cache hits!')
+    console.log('cache hits!', key)
     return res.send(ssrCache.get(key))
   }
 

@@ -42,6 +42,9 @@ const Container = styled.div`
     th:first-child {
       padding-left: 20px;
     }
+    th:first-child {
+      width: 32%;
+    }
     th:nth-child(5) {
       width: 50px;
     }
@@ -135,7 +138,6 @@ export default class HomePage extends Component {
   }
 
   render () {
-    console.log(this.props)
     return (
       <Container>
         {this.state.txs ? (

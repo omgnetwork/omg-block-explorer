@@ -1,9 +1,14 @@
 const withImages = require('next-images')
 const withCSS = require('@zeit/next-css')
+const dotenv = require('dotenv').config()
+if (dotenv.error) throw dotenv.error
 module.exports = compose(
   withImages,
   withCSS
 )({
+  publicRuntimeConfig: {
+    ETHERSCAN_URL: process.env.ETHERSCAN_URL
+  },
   webpack (config, options) {
     config.module.rules.push({
       test: /\.(woff|woff2|eot|ttf|otf)$/,
