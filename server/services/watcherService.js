@@ -1,13 +1,10 @@
-const { instance, handleError, handleResponse } = require('./apiClientService')
+const { instance } = require('./apiClientService')
+const { handleError, handleResponse } = require('../utils/serializer')
 
 function getTransactionById (transactionId) {
   const query = { id: transactionId }
   return instance
-    .post('/transaction.get', query, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    .post('/transaction.get', query)
     .then(handleResponse)
     .catch(handleError)
 }
@@ -18,15 +15,12 @@ function getTransactions ({ address, limit = 50 } = {}) {
     query = Object.assign(query, { address: address })
   }
   return instance
-    .post('/transaction.all', query, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    .post('/transaction.all', query)
     .then(handleResponse)
     .catch(handleError)
 }
 
 module.exports = {
-  getTransactionById, getTransactions
+  getTransactionById,
+  getTransactions
 }

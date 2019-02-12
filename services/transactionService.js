@@ -1,4 +1,5 @@
-import { instance, handleError, handleResponse } from './apiClientService'
+import { instance } from './apiClientService'
+import { handleError, handleResponse } from '../utils/serializer.js'
 import queryString from 'query-string'
 import CONSTANT from '../constant'
 

@@ -118,7 +118,12 @@ export default class AddressPage extends Component {
   static async getInitialProps (context) {
     try {
       const { data, success, error } = await getTransactions({ address: context.query.id })
-      return { txs: data, success, error: error && (error.description || error || 'Something going bad here...'), query: context.query }
+      return {
+        txs: data,
+        success,
+        error: error && (error.description || error || 'Something going bad here...'),
+        query: context.query
+      }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
@@ -166,7 +171,11 @@ export default class AddressPage extends Component {
                   return {
                     key: tx.txid,
                     tx: (
-                      <Link as={`/transaction/${tx.txid}`} href={`/transaction?id=${tx.txid}`} prefetch>
+                      <Link
+                        as={`/transaction/${tx.txid}`}
+                        href={`/transaction?id=${tx.txid}`}
+                        prefetch
+                      >
                         <a>{tx.txid}</a>
                       </Link>
                     ),
