@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'production') {
   expressApp.use(compression())
 }
 
-expressApp.use(morgan(process.env.NODE_ENV !== 'production' ? 'dev' : 'common'))
+expressApp.use(morgan('common'))
 
 expressApp.use(bodyParser.json())
 

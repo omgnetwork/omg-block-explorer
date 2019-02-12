@@ -98,29 +98,15 @@ export default class HomePage extends Component {
   static async getInitialProps (context) {
     try {
       const { data, success, error } = await getTransactions()
-      return { txs: data, success, error: error && (error.description || error || 'Something going bad here...') }
+      return { txs: data, success, error: error.description || 'Something going bad here...' }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
-  }
-  static defaultProps = {
-    txs: []
   }
   constructor (props) {
     super(props)
     this.state = { txs: this.props.txs, success: this.props.success, error: this.props.error }
   }
-  // componentDidMount = () => {
-  //   this.intervalLoadTransaction = setInterval(async () => {
-  //     const { data, success, error } = await getTransactions()
-  //     if (success) {
-  //       this.setState({ txs: data, success, error })
-  //     }
-  //   }, 1000)
-  // }
-  // componentWillUnmount = () => {
-  //   clearInterval(this.intervalLoadTransaction)
-  // }
   renderTable () {
     return (
       <div style={{ overflow: 'auto' }}>
@@ -161,7 +147,11 @@ export default class HomePage extends Component {
             <CardHeader>
               <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 50 transactions</span>
             </CardHeader>
-            {this.state.txs.length > 0 ? this.renderTable() : <Empty>There is no transaction here...</Empty>}
+            {this.state.txs.length > 0 ? (
+              this.renderTable()
+            ) : (
+              <Empty>There is no transaction here...</Empty>
+            )}
           </Card>
         ) : (
           <Error>{this.state.error}</Error>

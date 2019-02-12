@@ -12,7 +12,7 @@ function getTransactionById (transactionId) {
 function getTransactions ({ address, limit = 50 } = {}) {
   let query = { limit: parseInt(limit) }
   if (address) {
-    query = Object.assign(query, { address: address })
+    query = Object.assign(query, { address })
   }
   return instance
     .post('/transaction.all', query)

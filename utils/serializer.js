@@ -1,13 +1,30 @@
+import _ from 'lodash'
 export function handleResponse (response) {
-  return { success: response.data.success, data: response.data.data }
+  if (response.data.success) {
+    return { success: true, data: response.data.data, error: {} }
+  } else {
+    return {
+      success: false,
+      error: {
+        code: _.get(response, 'data.data.error.code', null),
+        description: _.get(response, 'data.data.error.description', null)
+      }
+    }
+  }
 }
 
 export function handleError (error) {
   if (error.response) {
-    return { success: false, error: error.response.error || error.response.statusText }
+    return {
+      success: false,
+      error: {
+        code: error.response.status,
+        description: error.response.statusText
+      }
+    }
   } else if (error.request) {
-    return { success: false, error: null }
+    return { success: false, error: { code: null, description: null } }
   } else {
-    return { success: false, error: error.message }
+    return { success: false, error: { code: null, description: error.message } }
   }
 }
