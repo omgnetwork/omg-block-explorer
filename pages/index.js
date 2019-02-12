@@ -74,11 +74,6 @@ const columns = [
     value: 'Value transacted'
   }
 ]
-const AddressContainer = styled.div`
-  a:first-child {
-    margin-bottom: 5px;
-  }
-`
 const Error = styled.div`
   font-size: calc(32px + 1.5vw);
   text-align: center;
@@ -98,7 +93,7 @@ export default class HomePage extends Component {
   static async getInitialProps (context) {
     try {
       const { data, success, error } = await getTransactions()
-      return { txs: data, success, error: error.description || 'Something going bad here...' }
+      return { txs: data, success, error: error.description }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
@@ -140,6 +135,7 @@ export default class HomePage extends Component {
   }
 
   render () {
+    console.log(this.props)
     return (
       <Container>
         {this.state.txs ? (
