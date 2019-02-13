@@ -14,6 +14,7 @@ export function handleResponse (response) {
 }
 
 export function handleError (error) {
+  console.error(error)
   if (error.response) {
     return {
       success: false,
@@ -25,6 +26,12 @@ export function handleError (error) {
   } else if (error.request) {
     return { success: false, error: { code: null, description: null } }
   } else {
-    return { success: false, error: { code: null, description: error.message } }
+    return {
+      success: false,
+      error: {
+        code: null,
+        description: 'Something went wrong on the server.'
+      }
+    }
   }
 }

@@ -95,5 +95,6 @@ async function renderAndCache (req, res, pagePath, queryParams) {
 }
 
 function handleUnexpectedError (error, req, res, next) {
+  console.error('handleUnexpectedError', error)
   res.status(500).send({ success: false, error: error.message })
 }
