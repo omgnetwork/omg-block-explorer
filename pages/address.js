@@ -121,33 +121,18 @@ export default class AddressPage extends Component {
       return {
         txs: data,
         success,
-        error: error && (error.description || error || 'Something going bad here...'),
+        error: error.description,
         query: context.query
       }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
   }
-  static defaultProps = {
-    txs: []
-  }
 
   constructor (props) {
     super(props)
     this.state = { txs: this.props.txs, success: this.props.success, error: this.props.error }
   }
-
-  // componentDidMount = () => {
-  //   this.intervalLoadTransaction = setInterval(async () => {
-  //     const { data, success, error } = await getTransactions({ address: this.props.query.id })
-  //     if (success) {
-  //       this.setState({ txs: data, success, error })
-  //     }
-  //   }, 1000)
-  // }
-  // componentWillUnmount = () => {
-  //   clearInterval(this.intervalLoadTransaction)
-  // }
 
   render () {
     return (
@@ -163,7 +148,7 @@ export default class AddressPage extends Component {
           <CardHeader>
             <h4>TRANSACTIONS: </h4> <span>showing the latest 50 transactions</span>
           </CardHeader>
-          {this.state.txs.length > 0 ? (
+          {this.state.success ? (
             <div style={{ overflow: 'auto' }}>
               <Table
                 columns={columns}
@@ -196,7 +181,7 @@ export default class AddressPage extends Component {
               />
             </div>
           ) : (
-            <Empty>There is no transaction here...</Empty>
+            <Empty>{this.state.error}</Empty>
           )}
         </Card>
       </Container>

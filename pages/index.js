@@ -98,7 +98,7 @@ export default class HomePage extends Component {
     try {
       const result = await Promise.all([getTransactions(), getStatus()]).then(
         ([txResult, statusResult]) => {
-          return { tx: txResult.data, txError: txResult.error, status: statusResult.data }
+          return { tx: txResult.data, txError: txResult.error.description, status: statusResult.data }
         }
       )
       return { txs: result.tx, status: result.status }
@@ -108,7 +108,7 @@ export default class HomePage extends Component {
   }
   constructor (props) {
     super(props)
-    this.state = { txs: this.props.txs, txResult: this.props.txError }
+    this.state = { txs: this.props.txs, txError: this.props.txError }
   }
   renderTable () {
     return (
@@ -168,7 +168,7 @@ export default class HomePage extends Component {
             </Card>
           </div>
         ) : (
-          <Error>{this.state.txResult}</Error>
+          <Error>{this.state.txError}</Error>
         )}
       </Container>
     )
