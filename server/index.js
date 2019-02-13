@@ -16,6 +16,7 @@ const apiRoute = require('./routes/api')
 const compression = require('compression')
 const morgan = require('morgan')
 
+console.log('Starting application with environment', process.env.NODE_ENV)
 const nextApp = next({ dev: process.env.NODE_ENV !== 'production' })
 const LRUCache = require('lru-cache')
 
