@@ -1,5 +1,6 @@
 const express = require('express')
 const { getTransactionById, getTransactions } = require('../services/watcherService')
+const { getStatus } = require('../services/statusService')
 const createRouteHandler = require('./createRouteHandler')
 const router = express.Router()
 
@@ -16,6 +17,17 @@ router.get(
     return getTransactionById(req.params.id)
   })
 )
+
+router.get(
+  '/status',
+  createRouteHandler((req, res) => {
+    return getStatus()
+  })
+)
+
+router.get('/block', (req, res) => {
+  res.send(true)
+})
 
 router.get('/block', (req, res) => {
   res.send(true)

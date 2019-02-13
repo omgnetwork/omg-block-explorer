@@ -3,6 +3,27 @@ import { handleError, handleResponse } from '../utils/serializer.js'
 import queryString from 'query-string'
 import CONSTANT from '../constant'
 
+export function getTransactionById (transactionId) {
+  return instance
+    .get(`/transaction/${transactionId}`)
+    .then(handleResponse)
+    .then(response => ({ ...response, data: formatTransaction(response.data) }))
+    .catch(handleError)
+}
+
+export function getTransactions ({ address, limit = 50 } = {}) {
+  let query = { limit }
+  if (address) {
+    query = Object.assign(query, { address })
+  }
+  const qs = queryString.stringify(query)
+  return instance
+    .get(`/transactions${qs ? `?${qs}` : ''}`)
+    .then(handleResponse)
+    .then(response => ({ ...response, data: response.data.map(tx => formatTransactionAll(tx)) }))
+    .catch(handleError)
+}
+
 function formatTransaction (tx) {
   if (typeof tx === 'object') {
     return {
@@ -42,25 +63,4 @@ function formatTransactionAll (tx) {
     }
   }
   return tx
-}
-
-export function getTransactionById (transactionId) {
-  return instance
-    .get(`/transaction/${transactionId}`)
-    .then(handleResponse)
-    .then(response => ({ ...response, data: formatTransaction(response.data) }))
-    .catch(handleError)
-}
-
-export function getTransactions ({ address, limit = 50 } = {}) {
-  let query = { limit }
-  if (address) {
-    query = Object.assign(query, { address })
-  }
-  const qs = queryString.stringify(query)
-  return instance
-    .get(`/transactions${qs ? `?${qs}` : ''}`)
-    .then(handleResponse)
-    .then(response => ({ ...response, data: response.data.map(tx => formatTransactionAll(tx)) }))
-    .catch(handleError)
 }

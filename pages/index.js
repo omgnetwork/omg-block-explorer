@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { getTransactions } from '../services/transactionService'
+import { getStatus } from '../services/statusService'
 import styled from 'styled-components'
 import Card, { CardHeader } from '../components/Card'
 import Table from '../components/Table'
@@ -87,23 +88,35 @@ const Empty = styled.div`
   padding: 50px;
   font-size: 32px;
 `
+const StatusContainer = styled.div`
+  text-align: right;
+  margin-bottom: 10px;
+  font-size: 14px;
+  b {
+    font-weight: 600;
+  }
+`
 export default class HomePage extends Component {
   static propTypes = {
     txs: PropTypes.array,
-    error: PropTypes.string,
-    success: PropTypes.bool
+    txError: PropTypes.string,
+    status: PropTypes.object
   }
   static async getInitialProps (context) {
     try {
-      const { data, success, error } = await getTransactions()
-      return { txs: data, success, error: error.description }
+      const result = await Promise.all([getTransactions(), getStatus()]).then(
+        ([txResult, statusResult]) => {
+          return { tx: txResult.data, txError: txResult.error, status: statusResult.data }
+        }
+      )
+      return { txs: result.tx, status: result.status }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
   }
   constructor (props) {
     super(props)
-    this.state = { txs: this.props.txs, success: this.props.success, error: this.props.error }
+    this.state = { txs: this.props.txs, txResult: this.props.txError }
   }
   renderTable () {
     return (
@@ -141,18 +154,28 @@ export default class HomePage extends Component {
     return (
       <Container>
         {this.state.txs ? (
-          <Card>
-            <CardHeader>
-              <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 50 transactions</span>
-            </CardHeader>
-            {this.state.txs.length > 0 ? (
-              this.renderTable()
-            ) : (
-              <Empty>There is no transaction here...</Empty>
-            )}
-          </Card>
+          <div>
+            <StatusContainer>
+              <b>Latest Validated Block: {this.props.status.last_validated_child_block_number}</b>{' | '}
+              {Moment(this.props.status.last_mined_child_block_timestamp * 1000).fromNow()}
+              {' | '}
+              {Moment(this.props.status.last_mined_child_block_timestamp * 1000).format(
+                'HH:MM:SS A | MMMM DD[,] YYYY'
+              )}
+            </StatusContainer>
+            <Card>
+              <CardHeader>
+                <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 50 transactions</span>
+              </CardHeader>
+              {this.state.txs.length > 0 ? (
+                this.renderTable()
+              ) : (
+                <Empty>There is no transaction here...</Empty>
+              )}
+            </Card>
+          </div>
         ) : (
-          <Error>{this.state.error}</Error>
+          <Error>{this.state.txResult}</Error>
         )}
       </Container>
     )

@@ -8,8 +8,8 @@ import Table from '../components/Table'
 import Link from 'next/link'
 import { truncateId } from '../utils/truncate'
 import { getTransactionById } from '../services/transactionService'
-import getConfig from 'next/config'
 import Moment from 'moment'
+import getConfig from 'next/config'
 const { publicRuntimeConfig } = getConfig()
 const { ETHERSCAN_URL } = publicRuntimeConfig
 const Container = styled.div`
@@ -134,13 +134,11 @@ export default class transaction extends Component {
   static propTypes = {
     tx: PropTypes.object,
     error: PropTypes.any,
-    success: PropTypes.bool,
-    etherscanUrl: PropTypes.string
+    success: PropTypes.bool
   }
   static async getInitialProps (context) {
     try {
       const { data, success, error } = await getTransactionById(context.query.id)
-      console.log(process.env)
       return {
         tx: data,
         success: success,
