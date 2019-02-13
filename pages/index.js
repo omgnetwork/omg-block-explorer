@@ -46,14 +46,6 @@ const Container = styled.div`
     th:first-child {
       width: 32%;
     }
-    th:nth-child(5) {
-      width: 50px;
-    }
-    td:nth-child(5) {
-      text-align: center;
-      padding: 0;
-      vertical-align: middle;
-    }
     td {
       vertical-align: middle;
     }
@@ -156,7 +148,8 @@ export default class HomePage extends Component {
         {this.state.txs ? (
           <div>
             <StatusContainer>
-              <b>Latest Validated Block: {this.props.status.last_validated_child_block_number}</b>{' | '}
+              <b>Latest Validated Block: {this.props.status.last_validated_child_block_number}</b>
+              {' | '}
               {Moment(this.props.status.last_mined_child_block_timestamp * 1000).fromNow()}
               {' | '}
               {Moment(this.props.status.last_mined_child_block_timestamp * 1000).format(

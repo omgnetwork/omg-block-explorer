@@ -4,13 +4,8 @@ require('dotenv').config()
 
 const invariant = require('invariant')
 const CONFIG = require('./config')
-import getConfig from 'next/config'
-const { publicRuntimeConfig } = getConfig()
-const { ETHERSCAN_URL } = publicRuntimeConfig
-
 invariant(!!process.env.ETHERSCAN_URL, 'Missing etherscan url in environment.')
 console.log('Watcher url is:', CONFIG.WATCHER_URL)
-console.log('Etherscan url is:', ETHERSCAN_URL)
 
 const next = require('next')
 const express = require('express')

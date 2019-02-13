@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 const Table = styled.table`
   width: 100%;
-  table-layout: fixed;
 `
 const Th = styled.th`
   padding: 15px 20px;
