@@ -44,7 +44,7 @@ const Container = styled.div`
       padding-left: 20px;
     }
     th:first-child {
-      width: 32%;
+      width: 33%;
     }
     td {
       vertical-align: middle;

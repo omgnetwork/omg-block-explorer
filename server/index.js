@@ -54,7 +54,6 @@ nextApp.prepare().then(() => {
   expressApp.get('/', (req, res) => {
     return renderAndCache(req, res, '/')
   })
-
   expressApp.get('*', (req, res) => {
     return nextRequestHandler(req, res)
   })
@@ -64,7 +63,7 @@ expressApp.use(handleUnexpectedError)
 
 server.listen(PORT, err => {
   if (err) throw err
-  console.log(`Server is ready on port:${PORT}`)
+  console.log(`Server is ready on http://localhost:${PORT}`)
 })
 
 function getCacheKey (req) {
