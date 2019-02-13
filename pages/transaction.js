@@ -23,18 +23,13 @@ const CardContent = styled.div`
   display: flex;
   padding: 30px;
   overflow: auto;
-  @media screen and (max-width: 600px) {
-    width: 1000px;
-  }
-  > div {
-    flex: 1 1 auto;
-  }
   table {
     text-align: left;
     font-size: 14px;
     th:last-child,
     td:last-child {
       text-align: right;
+      white-space: nowrap;
     }
     th:first-child,
     td:first-child {
@@ -45,6 +40,20 @@ const CardContent = styled.div`
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+  }
+  @media screen and (max-width: 800px) {
+    display: block;
+    table {
+      display: table;
+      th:first-child,
+      td:first-child {
+        width: 50%;
+      }
+      th:last-child,
+      td:last-child {
+        width: 100%;
+      }
     }
   }
 `

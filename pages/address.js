@@ -19,15 +19,7 @@ const Container = styled.div`
   }
   table {
     text-align: left;
-    @media screen and (max-width: 600px) {
-      width: 800px;
-      td:nth-child(2),
-      td:nth-child(5),
-      th:nth-child(2),
-      th:nth-child(5) {
-        display: none;
-      }
-    }
+    min-width: 600px;
     a {
       display: block;
       width: 100%;
@@ -39,20 +31,8 @@ const Container = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    td:first-child,
     th:first-child {
-      padding-left: 20px;
-    }
-    th:nth-child(5) {
-      width: 50px;
-    }
-    td:nth-child(5) {
-      text-align: center;
-      padding: 0;
-      vertical-align: middle;
-    }
-    td {
-      vertical-align: middle;
+      width: 40%;
     }
   }
 `

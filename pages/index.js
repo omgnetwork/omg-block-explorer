@@ -19,15 +19,7 @@ const Container = styled.div`
   }
   table {
     text-align: left;
-    @media screen and (max-width: 600px) {
-      width: 800px;
-      td:nth-child(2),
-      td:nth-child(5),
-      th:nth-child(2),
-      th:nth-child(5) {
-        display: none;
-      }
-    }
+    min-width: 600px;
     a {
       display: block;
       width: 100%;
@@ -39,15 +31,8 @@ const Container = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    td:first-child,
     th:first-child {
-      padding-left: 20px;
-    }
-    th:first-child {
-      width: 33%;
-    }
-    td {
-      vertical-align: middle;
+      width: 40%;
     }
   }
 `
@@ -98,7 +83,11 @@ export default class HomePage extends Component {
     try {
       const result = await Promise.all([getTransactions(), getStatus()]).then(
         ([txResult, statusResult]) => {
-          return { tx: txResult.data, txError: txResult.error.description, status: statusResult.data }
+          return {
+            tx: txResult.data,
+            txError: txResult.error.description,
+            status: statusResult.data
+          }
         }
       )
       return { txs: result.tx, status: result.status }
