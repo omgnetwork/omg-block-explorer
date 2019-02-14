@@ -5,13 +5,15 @@ require('dotenv').config()
 const urlEtherscanMap = {
   'http://watcher-staging.omg.network': 'https://rinkeby.etherscan.io/'
 }
+const etherscanUrl = urlEtherscanMap[process.env.WATCHER_URL]
+console.log('Etherscan url is:', etherscanUrl)
 
 module.exports = compose(
   withImages,
   withCSS
 )({
   publicRuntimeConfig: {
-    ETHERSCAN_URL: urlEtherscanMap[process.env.WATCHER_URL] || null
+    ETHERSCAN_URL: etherscanUrl || null
   },
   webpack (config, options) {
     config.module.rules.push({

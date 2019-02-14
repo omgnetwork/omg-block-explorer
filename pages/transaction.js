@@ -237,9 +237,13 @@ export default class transaction extends Component {
           <Icon name='Token' />{' '}
           <span>
             Ethereum Block height{' '}
-            <Link href={`${ETHERSCAN_URL}block/${this.props.tx.eth_height}`}>
-              <a target='_blank'>{this.props.tx.eth_height}</a>
-            </Link>
+            {ETHERSCAN_URL ? (
+              <Link href={`${ETHERSCAN_URL}block/${this.props.tx.eth_height}`}>
+                <a target='_blank'>{this.props.tx.eth_height}</a>
+              </Link>
+            ) : (
+              this.props.tx.eth_height
+            )}
           </span>
         </div>
         <div>
