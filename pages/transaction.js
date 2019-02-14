@@ -182,7 +182,7 @@ export default class transaction extends Component {
                       <a>{io.owner}</a>
                     </Link>
                   ),
-                  amount: `${io.amount} ${io.token_symbol}`
+                  amount: `${io.amount} ${io.token_symbol ? io.token_symbol : ''}`
                 }))}
               />
             </div>
@@ -200,7 +200,7 @@ export default class transaction extends Component {
                       <a>{io.owner}</a>
                     </Link>
                   ),
-                  amount: `${io.amount} ${io.token_symbol}`
+                  amount: `${io.amount} ${io.token_symbol ? io.token_symbol : ''}`
                 }))}
               />
             </div>
