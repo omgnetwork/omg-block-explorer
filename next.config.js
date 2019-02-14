@@ -3,7 +3,8 @@ const withCSS = require('@zeit/next-css')
 require('dotenv').config()
 
 const urlEtherscanMap = {
-  'http://watcher-staging.omg.network': 'https://rinkeby.etherscan.io/'
+  'http://watcher-staging.omg.network': 'https://rinkeby.etherscan.io/',
+  'https://watcher.ari.omg.network': 'https://rinkeby.etherscan.io/'
 }
 const etherscanUrl = urlEtherscanMap[process.env.WATCHER_URL]
 console.log('Etherscan url is:', etherscanUrl)
