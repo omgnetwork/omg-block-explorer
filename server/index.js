@@ -4,7 +4,6 @@ require('dotenv').config()
 
 const invariant = require('invariant')
 const CONFIG = require('./config')
-invariant(!!process.env.ETHERSCAN_URL, 'Missing etherscan url in environment.')
 console.log('Watcher url is:', CONFIG.WATCHER_URL)
 
 const next = require('next')

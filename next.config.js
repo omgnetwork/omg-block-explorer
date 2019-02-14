@@ -1,7 +1,6 @@
 const withImages = require('next-images')
 const withCSS = require('@zeit/next-css')
-const dotenv = require('dotenv').config()
-if (dotenv.error) throw dotenv.error
+require('dotenv').config()
 
 const urlEtherscanMap = {
   'http://watcher-staging.omg.network': 'https://rinkeby.etherscan.io/'
