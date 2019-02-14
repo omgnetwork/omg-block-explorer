@@ -8,8 +8,10 @@ import Table from '../components/Table'
 import Link from 'next/link'
 import { truncateId } from '../utils/truncate'
 import { getTransactionById } from '../services/transactionService'
-import _ from 'lodash'
 import Moment from 'moment'
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig()
+const { ETHERSCAN_URL } = publicRuntimeConfig
 const Container = styled.div`
   max-width: 1200px;
   margin: 50px auto 0 auto;
@@ -21,18 +23,13 @@ const CardContent = styled.div`
   display: flex;
   padding: 30px;
   overflow: auto;
-  @media screen and (max-width: 600px) {
-    width: 1000px;
-  }
-  > div {
-    flex: 1 1 auto;
-  }
   table {
     text-align: left;
     font-size: 14px;
     th:last-child,
     td:last-child {
       text-align: right;
+      white-space: nowrap;
     }
     th:first-child,
     td:first-child {
@@ -43,6 +40,20 @@ const CardContent = styled.div`
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+  }
+  @media screen and (max-width: 800px) {
+    display: block;
+    table {
+      display: table;
+      th:first-child,
+      td:first-child {
+        width: 50%;
+      }
+      th:last-child,
+      td:last-child {
+        width: 100%;
+      }
     }
   }
 `
@@ -137,7 +148,11 @@ export default class transaction extends Component {
   static async getInitialProps (context) {
     try {
       const { data, success, error } = await getTransactionById(context.query.id)
-      return { tx: data, success: success, error: error && (error.description || error || 'Something going bad here...') }
+      return {
+        tx: data,
+        success: success,
+        error: error.description
+      }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
@@ -148,26 +163,27 @@ export default class transaction extends Component {
       <Card>
         <StyledCardHeader>
           Transferred{' '}
-          <span>
-            {this.props.tx.amount1} {this.props.tx.token_symbol}
-          </span>
+          {this.props.tx.inputs.map((input, index) => (
+            <span key={index}>
+              {input.amount} {input.token_symbol}
+            </span>
+          ))}
         </StyledCardHeader>
         <div style={{ overflow: 'auto' }}>
           <CardContent>
             <div>
               <h4>From</h4>
               <Table
-                columns={[{ key: 'address', value: 'address' }]}
-                dataSource={[
-                  {
-                    key: this.props.tx.spender1,
-                    address: (
-                      <Link as={`/address/${this.props.tx.spender1}`} href={`/address?id=${this.props.tx.spender1}`} prefetch>
-                        <a>{this.props.tx.spender1}</a>
-                      </Link>
-                    )
-                  }
-                ]}
+                columns={columns}
+                dataSource={this.props.tx.inputs.map(io => ({
+                  key: io.owner,
+                  address: (
+                    <Link as={`/address/${io.owner}`} href={`/address?id=${io.owner}`} prefetch>
+                      <a>{io.owner}</a>
+                    </Link>
+                  ),
+                  amount: `${io.amount} ${io.token_symbol}`
+                }))}
               />
             </div>
             <ArrowContainer>
@@ -177,26 +193,15 @@ export default class transaction extends Component {
               <h4>To</h4>
               <Table
                 columns={columns}
-                dataSource={[
-                  {
-                    key: this.props.tx.newowner1,
-                    address: (
-                      <Link as={`/address/${this.props.tx.newowner1}`} href={`/address?id=${this.props.tx.newowner1}`} prefetch>
-                        <a>{this.props.tx.newowner1}</a>
-                      </Link>
-                    ),
-                    amount: `${this.props.tx.amount1} ${this.props.tx.token_symbol}`
-                  },
-                  {
-                    key: this.props.tx.newowner2,
-                    address: (
-                      <Link as={`/address/${this.props.tx.newowner2}`} href={`/address?id=${this.props.tx.newowner2}`} prefetch>
-                        <a>{this.props.tx.newowner2}</a>
-                      </Link>
-                    ),
-                    amount: `${this.props.tx.amount2} ${this.props.tx.token_symbol}`
-                  }
-                ]}
+                dataSource={this.props.tx.outputs.map(io => ({
+                  key: io.owner,
+                  address: (
+                    <Link as={`/address/${io.owner}`} href={`/address?id=${io.owner}`} prefetch>
+                      <a>{io.owner}</a>
+                    </Link>
+                  ),
+                  amount: `${io.amount} ${io.token_symbol}`
+                }))}
               />
             </div>
           </CardContent>
@@ -232,8 +237,8 @@ export default class transaction extends Component {
           <Icon name='Token' />{' '}
           <span>
             Ethereum Block height{' '}
-            <Link href='/' prefetch>
-              <a>{this.props.tx.eth_height}</a>
+            <Link href={`${ETHERSCAN_URL}block/${this.props.tx.eth_height}`}>
+              <a target='_blank'>{this.props.tx.eth_height}</a>
             </Link>
           </span>
         </div>

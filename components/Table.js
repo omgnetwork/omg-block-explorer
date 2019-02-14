@@ -14,6 +14,9 @@ const Td = styled.td`
   border-bottom: 1px solid #f7f8fa;
   font-size: 14px;
   border-top: 1px solid #f7f8fa;
+  @media screen and (max-width: 600px) {
+    padding: 5px 10px;
+  }
 `
 export default class TableComponent extends Component {
   static propTypes = {

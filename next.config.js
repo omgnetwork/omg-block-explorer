@@ -1,10 +1,19 @@
 const withImages = require('next-images')
 const withCSS = require('@zeit/next-css')
+const dotenv = require('dotenv').config()
+if (dotenv.error) throw dotenv.error
+
+const urlEtherscanMap = {
+  'http://watcher-staging.omg.network': 'https://rinkeby.etherscan.io/'
+}
 
 module.exports = compose(
   withImages,
   withCSS
 )({
+  publicRuntimeConfig: {
+    ETHERSCAN_URL: urlEtherscanMap[process.env.WATCHER_URL] || null
+  },
   webpack (config, options) {
     config.module.rules.push({
       test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -24,7 +33,7 @@ module.exports = compose(
     return config
   },
   generateBuildId: async () => {
-    return 'cbe169bfc7a979ff7652da381197c1bdd868b47c'
+    return 'a-unique-build-id-hot-fix-works-for-now'
   }
 })
 

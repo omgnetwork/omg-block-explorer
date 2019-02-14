@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { getTransactions } from '../services/transactionService'
+import { getStatus } from '../services/statusService'
 import styled from 'styled-components'
 import Card, { CardHeader } from '../components/Card'
 import Table from '../components/Table'
@@ -18,15 +19,7 @@ const Container = styled.div`
   }
   table {
     text-align: left;
-    @media screen and (max-width: 600px) {
-      width: 800px;
-      td:nth-child(2),
-      td:nth-child(5),
-      th:nth-child(2),
-      th:nth-child(5) {
-        display: none;
-      }
-    }
+    min-width: 600px;
     a {
       display: block;
       width: 100%;
@@ -38,20 +31,8 @@ const Container = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    td:first-child,
     th:first-child {
-      padding-left: 20px;
-    }
-    th:nth-child(5) {
-      width: 50px;
-    }
-    td:nth-child(5) {
-      text-align: center;
-      padding: 0;
-      vertical-align: middle;
-    }
-    td {
-      vertical-align: middle;
+      width: 40%;
     }
   }
 `
@@ -70,27 +51,10 @@ const columns = [
     value: 'Age'
   },
   {
-    key: 'from',
-    value: 'From'
-  },
-  {
-    key: 'arrow',
-    value: ''
-  },
-  {
-    key: 'to',
-    value: 'To'
-  },
-  {
     key: 'amount',
     value: 'Value transacted'
   }
 ]
-const AddressContainer = styled.div`
-  a:first-child {
-    margin-bottom: 5px;
-  }
-`
 const Error = styled.div`
   font-size: calc(32px + 1.5vw);
   text-align: center;
@@ -101,38 +65,40 @@ const Empty = styled.div`
   padding: 50px;
   font-size: 32px;
 `
+const StatusContainer = styled.div`
+  text-align: right;
+  margin-bottom: 10px;
+  font-size: 14px;
+  b {
+    font-weight: 600;
+  }
+`
 export default class HomePage extends Component {
   static propTypes = {
     txs: PropTypes.array,
-    error: PropTypes.string,
-    success: PropTypes.bool
+    txError: PropTypes.string,
+    status: PropTypes.object
   }
   static async getInitialProps (context) {
     try {
-      const { data, success, error } = await getTransactions()
-      return { txs: data, success, error: error && (error.description || error || 'Something going bad here...') }
+      const result = await Promise.all([getTransactions(), getStatus()]).then(
+        ([txResult, statusResult]) => {
+          return {
+            tx: txResult.data,
+            txError: txResult.error.description,
+            status: statusResult.data
+          }
+        }
+      )
+      return { txs: result.tx, status: result.status }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
   }
-  static defaultProps = {
-    txs: []
-  }
   constructor (props) {
     super(props)
-    this.state = { txs: this.props.txs, success: this.props.success, error: this.props.error }
+    this.state = { txs: this.props.txs, txError: this.props.txError }
   }
-  // componentDidMount = () => {
-  //   this.intervalLoadTransaction = setInterval(async () => {
-  //     const { data, success, error } = await getTransactions()
-  //     if (success) {
-  //       this.setState({ txs: data, success, error })
-  //     }
-  //   }, 1000)
-  // }
-  // componentWillUnmount = () => {
-  //   clearInterval(this.intervalLoadTransaction)
-  // }
   renderTable () {
     return (
       <div style={{ overflow: 'auto' }}>
@@ -148,34 +114,13 @@ export default class HomePage extends Component {
               ),
               block: tx.txblknum,
               age: Moment(tx.timestamp).fromNow(),
-              from: (
-                <AddressContainer>
-                  <Link as={`/address/${tx.spender1}`} href={`/address?id=${tx.spender1}`} prefetch>
-                    <a>{tx.spender1}</a>
-                  </Link>
-                  <Link as={`/address/${tx.spender2}`} href={`/address?id=${tx.spender2}`} prefetch>
-                    <a>{tx.spender2}</a>
-                  </Link>
-                </AddressContainer>
-              ),
-              to: (
-                <AddressContainer>
-                  <Link as={`/address/${tx.newowner1}`} href={`/address?id=${tx.newowner1}`} prefetch>
-                    <a>{tx.newowner1}</a>
-                  </Link>
-                  <Link as={`/address/${tx.newowner2}`} href={`/address?id=${tx.newowner2}`} prefetch>
-                    <a>{tx.newowner2}</a>
-                  </Link>
-                </AddressContainer>
-              ),
               amount: (
                 <div>
-                  <div style={{ marginBottom: '5px' }}>
-                    <span>{tx.amount1}</span> <span>{tx.token_symbol}</span>
-                  </div>
-                  <div>
-                    <span>{tx.amount2}</span> <span>{tx.token_symbol}</span>
-                  </div>
+                  {tx.amounts.map((amount, index) => (
+                    <div key={index} style={{ marginBottom: '5px' }}>
+                      <span>{amount.value}</span> <span>{amount.token_symbol}</span>
+                    </div>
+                  ))}
                 </div>
               ),
               arrow: <Icon name='Arrow-Long-Right' />
@@ -190,14 +135,29 @@ export default class HomePage extends Component {
     return (
       <Container>
         {this.state.txs ? (
-          <Card>
-            <CardHeader>
-              <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 50 transactions</span>
-            </CardHeader>
-            {this.state.txs.length > 0 ? this.renderTable() : <Empty>There is no transaction here...</Empty>}
-          </Card>
+          <div>
+            <StatusContainer>
+              <b>Latest Validated Block: {this.props.status.last_validated_child_block_number}</b>
+              {' | '}
+              {Moment(this.props.status.last_mined_child_block_timestamp * 1000).fromNow()}
+              {' | '}
+              {Moment(this.props.status.last_mined_child_block_timestamp * 1000).format(
+                'HH:MM:SS A | MMMM DD[,] YYYY'
+              )}
+            </StatusContainer>
+            <Card>
+              <CardHeader>
+                <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 50 transactions</span>
+              </CardHeader>
+              {this.state.txs.length > 0 ? (
+                this.renderTable()
+              ) : (
+                <Empty>There is no transaction here...</Empty>
+              )}
+            </Card>
+          </div>
         ) : (
-          <Error>{this.state.error}</Error>
+          <Error>{this.state.txError}</Error>
         )}
       </Container>
     )
