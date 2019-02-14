@@ -38,7 +38,6 @@
     "morgan": "^1.9.1",
     "next": "^7.0.1",
     "next-images": "^1.0.1",
-    "nodemon": "^1.18.4",
     "query-string": "^6.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
@@ -56,6 +55,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "nodemon": "^1.18.10"
   }
 }
