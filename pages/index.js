@@ -12,7 +12,7 @@ const Container = styled.div`
   position: relative;
   max-width: 1200px;
   margin: 0 auto;
-  padding-top: 50px;
+  padding-top: 30px;
   overflow: auto;
   h4 {
     display: inline-block;
@@ -66,11 +66,25 @@ const Empty = styled.div`
   font-size: 32px;
 `
 const StatusContainer = styled.div`
-  text-align: right;
+  text-align: center;
   margin-bottom: 10px;
   font-size: 14px;
   b {
     font-weight: 600;
+  }
+`
+const Blocks = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  > div {
+    padding: 10px 30px;
+    :first-child {
+      padding-left: 0;
+    }
+    :last-child {
+      padding-right: 0;
+    }
   }
 `
 export default class HomePage extends Component {
@@ -78,30 +92,49 @@ export default class HomePage extends Component {
     txs: PropTypes.array,
     txError: PropTypes.string,
     status: PropTypes.object,
-    rate: PropTypes.object
+    rateDay: PropTypes.object,
+    rateMin: PropTypes.object,
+    rateMonth: PropTypes.object
+
   }
   static async getInitialProps (context) {
     try {
       const result = await Promise.all([
         getTransactions(),
         getStatus(),
-        getTransactionRate('1 day')
-      ]).then(([txResult, statusResult, rateResult]) => {
+        getTransactionRate('1 day'),
+        getTransactionRate('5 minutes'),
+        getTransactionRate('1 month')
+      ]).then(([txResult, statusResult, rateDayResult, rateMinResult, rateMonthResult]) => {
         return {
           tx: txResult.data,
           txError: txResult.error.description,
           status: statusResult.data,
-          rate: rateResult
+          rateDay: rateDayResult.data.count,
+          rateMin: rateMinResult.data.count,
+          rateMonth: rateMonthResult.data.count
         }
       })
-      return { txs: result.tx, status: result.status, rate: result.rate }
+      return {
+        txs: result.tx,
+        status: result.status,
+        rateDay: result.rateDay,
+        rateMin: result.rateMin,
+        rateMonth: result.rateMonth
+      }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
   }
   constructor (props) {
     super(props)
-    this.state = { txs: this.props.txs, txError: this.props.txError, rate: this.props.rate }
+    this.state = {
+      txs: this.props.txs,
+      txError: this.props.txError,
+      rateDay: this.props.rateDay,
+      rateMin: this.props.rateMin,
+      rateMonth: this.props.rateMonth
+    }
   }
   renderTable () {
     return (
@@ -136,31 +169,47 @@ export default class HomePage extends Component {
   }
 
   render () {
-    console.log(this.state.rate)
     return (
       <Container>
-        {this.state.txs ? (
-          <div>
-            <StatusContainer>
-              <b>Latest Validated Block: {this.props.status.last_validated_child_block_number}</b>
-              {' | '}
-              {Moment(this.props.status.last_mined_child_block_timestamp * 1000).fromNow()}
-              {' | '}
-              {Moment(this.props.status.last_mined_child_block_timestamp * 1000).format(
-                'HH:MM:SS A | MMMM DD[,] YYYY'
-              )}
-            </StatusContainer>
-            <Card>
-              <CardHeader>
-                <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 50 transactions</span>
-              </CardHeader>
-              {this.state.txs.length > 0 ? (
-                this.renderTable()
-              ) : (
-                <Empty>There is no transaction here...</Empty>
-              )}
-            </Card>
+        <Blocks>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '42px' }}>{this.state.rateMin}</div>
+            <div>Transactions in last 5 Minutes</div>
           </div>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '42px' }}>{this.state.rateDay}</div>
+            <div>Transactions in last 24 hours</div>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '42px' }}>{this.state.rateMonth}</div>
+            <div>Transactions in last 30 days</div>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '42px' }}>
+              {this.props.status.last_validated_child_block_number}
+            </div>
+            <div>Latest Validated Block</div>
+          </div>
+        </Blocks>
+        <StatusContainer>
+          <b>lastest validate block time:{' '}</b>
+          {Moment(this.props.status.last_mined_child_block_timestamp * 1000).fromNow()}
+          {' | '}
+          {Moment(this.props.status.last_mined_child_block_timestamp * 1000).format(
+            'HH:MM:SS A | MMMM DD[,] YYYY'
+          )}
+        </StatusContainer>
+        {this.state.txs ? (
+          <Card>
+            <CardHeader>
+              <h4>RECENT TRANSACTIONS : </h4> <span>showing latest 50 transactions</span>
+            </CardHeader>
+            {this.state.txs.length > 0 ? (
+              this.renderTable()
+            ) : (
+              <Empty>There is no transaction here...</Empty>
+            )}
+          </Card>
         ) : (
           <Error>{this.state.txError}</Error>
         )}
