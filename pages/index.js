@@ -85,6 +85,20 @@ const Blocks = styled.div`
     :last-child {
       padding-right: 0;
     }
+    .rate-number {
+      font-size: 42px;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    flex-wrap: wrap;
+    > div {
+      width: calc(50% - 10px);
+      padding: 5px;
+      font-size: 70%;
+      .rate-number {
+        font-size: 26px;
+      }
+    }
   }
 `
 
@@ -209,21 +223,19 @@ export default class HomePage extends Component {
       <Container>
         <Blocks>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '42px' }}>{this.state.rateMin}</div>
+            <div className='rate-number'>{this.state.rateMin}</div>
             <div>Transactions in last 5 Minutes</div>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '42px' }}>{this.state.rateDay}</div>
+            <div className='rate-number'>{this.state.rateDay}</div>
             <div>Transactions in last 24 hours</div>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '42px' }}>{this.state.rateMonth}</div>
+            <div className='rate-number'>{this.state.rateMonth}</div>
             <div>Transactions in last 30 days</div>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '42px' }}>
-              {this.props.status.last_validated_child_block_number}
-            </div>
+            <div className='rate-number'>{this.props.status.last_validated_child_block_number}</div>
             <div>Latest Validated Block</div>
           </div>
         </Blocks>
