@@ -11,9 +11,8 @@ function getTransactionsRate (rate) {
        WHERE to_timestamp(blocks.timestamp) > now() - $1::interval`,
       [rate],
       (err, res) => {
-        console.log(err, res)
-        if (err) reject(err)
-        resolve({
+        if (err) return reject(err)
+        return resolve({
           success: true,
           data: res.rows[0]
         })
