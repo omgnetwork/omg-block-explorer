@@ -10,8 +10,8 @@ class Database {
     this.pool.end()
   }
 
-  query (query, params, cb) {
-    return params ? this.pool.query(query, params, cb) : this.pool.query(query, cb)
+  query (...args) {
+    return this.pool.query(...args)
   }
 }
 
