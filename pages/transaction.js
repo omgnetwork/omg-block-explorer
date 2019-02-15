@@ -33,7 +33,7 @@ const CardContent = styled.div`
     }
     th:first-child,
     td:first-child {
-      width: 70%;
+      width: 40%;
       text-align: left;
     }
     td > div {
