@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { getTransactions } from '../services/transactionService'
+import { getTransactions, getTransactionRate } from '../services/transactionService'
 import { getStatus } from '../services/statusService'
 import styled from 'styled-components'
 import Card, { CardHeader } from '../components/Card'
@@ -77,27 +77,31 @@ export default class HomePage extends Component {
   static propTypes = {
     txs: PropTypes.array,
     txError: PropTypes.string,
-    status: PropTypes.object
+    status: PropTypes.object,
+    rate: PropTypes.object
   }
   static async getInitialProps (context) {
     try {
-      const result = await Promise.all([getTransactions(), getStatus()]).then(
-        ([txResult, statusResult]) => {
-          return {
-            tx: txResult.data,
-            txError: txResult.error.description,
-            status: statusResult.data
-          }
+      const result = await Promise.all([
+        getTransactions(),
+        getStatus(),
+        getTransactionRate('1 day')
+      ]).then(([txResult, statusResult, rateResult]) => {
+        return {
+          tx: txResult.data,
+          txError: txResult.error.description,
+          status: statusResult.data,
+          rate: rateResult
         }
-      )
-      return { txs: result.tx, status: result.status }
+      })
+      return { txs: result.tx, status: result.status, rate: result.rate }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
   }
   constructor (props) {
     super(props)
-    this.state = { txs: this.props.txs, txError: this.props.txError }
+    this.state = { txs: this.props.txs, txError: this.props.txError, rate: this.props.rate }
   }
   renderTable () {
     return (
@@ -132,6 +136,7 @@ export default class HomePage extends Component {
   }
 
   render () {
+    console.log(this.state.rate)
     return (
       <Container>
         {this.state.txs ? (

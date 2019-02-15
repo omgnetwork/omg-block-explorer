@@ -1,6 +1,7 @@
 const express = require('express')
 const { getTransactionById, getTransactions } = require('../services/watcherService')
 const { getStatus } = require('../services/statusService')
+const { getTransactionsRate } = require('../database/models/transactionModel')
 const createRouteHandler = require('./createRouteHandler')
 const router = express.Router()
 
@@ -10,6 +11,11 @@ router.get(
     return getTransactions({ address: req.query.address, limit: req.query.limit })
   })
 )
+
+router.post('/transaction_rate', async (req, res) => {
+  const result = await getTransactionsRate(req.body.rate)
+  res.send(result)
+})
 
 router.get(
   '/transaction/:id',

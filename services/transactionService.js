@@ -3,6 +3,12 @@ import { handleError, handleResponse } from '../utils/serializer.js'
 import queryString from 'query-string'
 import CONSTANT from '../constant'
 
+export function getTransactionRate (rate) {
+  return instance
+    .post('/transaction_rate', { rate })
+    .then(handleResponse)
+}
+
 export function getTransactionById (transactionId) {
   return instance
     .get(`/transaction/${transactionId}`)

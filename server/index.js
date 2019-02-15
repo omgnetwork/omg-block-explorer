@@ -1,9 +1,10 @@
 /* eslint-disable import/first */
-console.log('Initializing app...')
 require('dotenv').config()
+console.log('Initializing app...')
 
 const invariant = require('invariant')
 const CONFIG = require('./config')
+
 invariant(!!CONFIG.WATCHER_URL, 'Missing watcher url in environment.')
 console.log('Watcher url is:', CONFIG.WATCHER_URL)
 
@@ -15,34 +16,25 @@ const http = require('http')
 const apiRoute = require('./routes/api')
 const compression = require('compression')
 const morgan = require('morgan')
-
-console.log('Starting application with environment', process.env.NODE_ENV)
 const nextApp = next({ dev: process.env.NODE_ENV !== 'production' })
 const LRUCache = require('lru-cache')
-
+const db = require('./database/database')
 const expressApp = express()
 const server = http.Server(expressApp)
-
 const nextRequestHandler = nextApp.getRequestHandler()
-
 const ssrCache = new LRUCache({
   max: 100,
   maxAge: 1000 * 5
 })
-
 const PORT = 3000
-
-if (process.env.NODE_ENV === 'production') {
-  expressApp.use(compression())
-}
-
+if (process.env.NODE_ENV === 'production') expressApp.use(compression())
 expressApp.use(morgan('common'))
-
 expressApp.use(bodyParser.json())
-
 expressApp.use('/api', apiRoute)
+async function bootApp () {
+  console.log('Starting application with environment', process.env.NODE_ENV)
+  await nextApp.prepare()
 
-nextApp.prepare().then(() => {
   expressApp.get('/transaction/:id', (req, res) => {
     const params = { id: req.params.id }
     return renderAndCache(req, res, '/transaction', params)
@@ -55,17 +47,17 @@ nextApp.prepare().then(() => {
   expressApp.get('/', (req, res) => {
     return renderAndCache(req, res, '/')
   })
+
   expressApp.get('*', (req, res) => {
     return nextRequestHandler(req, res)
   })
-})
 
-expressApp.use(handleUnexpectedError)
-
-server.listen(PORT, err => {
-  if (err) throw err
-  console.log(`Server is ready on http://localhost:${PORT}`)
-})
+  expressApp.use(handleUnexpectedError)
+  server.listen(PORT, err => {
+    if (err) throw err
+    console.log(`Server is ready on http://localhost:${PORT}`)
+  })
+}
 
 function getCacheKey (req) {
   return `${req.url}`
@@ -98,3 +90,5 @@ function handleUnexpectedError (error, req, res, next) {
   console.error('handleUnexpectedError', error)
   res.status(500).send({ success: false, error: error.message })
 }
+
+bootApp()

@@ -1,6 +1,5 @@
 const { instance } = require('./apiClientService')
 const { handleError, handleResponse } = require('../utils/serializer')
-
 function getTransactionById (transactionId) {
   const query = { id: transactionId }
   return instance
