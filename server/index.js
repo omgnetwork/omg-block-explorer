@@ -6,6 +6,7 @@ const invariant = require('invariant')
 const CONFIG = require('./config')
 
 invariant(!!CONFIG.WATCHER_URL, 'Missing watcher url in environment.')
+invariant(!!process.env.POSTGRES_CONNECTION_STRING, 'Missing Postgres connection string in environment.')
 console.log('Watcher url is:', CONFIG.WATCHER_URL)
 
 const next = require('next')
