@@ -87,45 +87,57 @@ const Blocks = styled.div`
     }
   }
 `
+
+async function fetchData () {
+  const result = await Promise.all([
+    getTransactions(),
+    getStatus(),
+    getTransactionRate('1 day'),
+    getTransactionRate('5 minutes'),
+    getTransactionRate('1 month')
+  ]).then(([txResult, statusResult, rateDayResult, rateMinResult, rateMonthResult]) => {
+    return {
+      txResult,
+      statusResult,
+      rateDayResult,
+      rateMinResult,
+      rateMonthResult
+    }
+  })
+  return result
+}
 export default class HomePage extends Component {
   static propTypes = {
     txs: PropTypes.array,
     txError: PropTypes.string,
     status: PropTypes.object,
-    rateDay: PropTypes.object,
-    rateMin: PropTypes.object,
-    rateMonth: PropTypes.object
-
+    rateDay: PropTypes.string,
+    rateMin: PropTypes.string,
+    rateMonth: PropTypes.string
   }
+
   static async getInitialProps (context) {
     try {
-      const result = await Promise.all([
-        getTransactions(),
-        getStatus(),
-        getTransactionRate('1 day'),
-        getTransactionRate('5 minutes'),
-        getTransactionRate('1 month')
-      ]).then(([txResult, statusResult, rateDayResult, rateMinResult, rateMonthResult]) => {
-        return {
-          tx: txResult.data,
-          txError: txResult.error.description,
-          status: statusResult.data,
-          rateDay: rateDayResult.data.count,
-          rateMin: rateMinResult.data.count,
-          rateMonth: rateMonthResult.data.count
-        }
-      })
+      const {
+        txResult,
+        statusResult,
+        rateDayResult,
+        rateMinResult,
+        rateMonthResult
+      } = await fetchData()
       return {
-        txs: result.tx,
-        status: result.status,
-        rateDay: result.rateDay,
-        rateMin: result.rateMin,
-        rateMonth: result.rateMonth
+        txs: txResult.data,
+        txError: txResult.error.description,
+        status: statusResult.data,
+        rateDay: rateDayResult.data.count,
+        rateMin: rateMinResult.data.count,
+        rateMonth: rateMonthResult.data.count
       }
     } catch (error) {
       return { error: 'something is wrong!' }
     }
   }
+
   constructor (props) {
     super(props)
     this.state = {
@@ -136,6 +148,30 @@ export default class HomePage extends Component {
       rateMonth: this.props.rateMonth
     }
   }
+
+  componentDidMount = () => {
+    this.intervalLoadTransaction = setInterval(async () => {
+      const {
+        txResult,
+        statusResult,
+        rateDayResult,
+        rateMinResult,
+        rateMonthResult
+      } = await fetchData()
+      this.setState({
+        txs: txResult.data,
+        txError: txResult.error.description,
+        status: statusResult.data,
+        rateDay: rateDayResult.data.count,
+        rateMin: rateMinResult.data.count,
+        rateMonth: rateMonthResult.data.count
+      })
+    }, 5000)
+  }
+  componentWillUnmount = () => {
+    clearInterval(this.intervalLoadTransaction)
+  }
+
   renderTable () {
     return (
       <div style={{ overflow: 'auto' }}>
@@ -192,7 +228,7 @@ export default class HomePage extends Component {
           </div>
         </Blocks>
         <StatusContainer>
-          <b>lastest validate block time:{' '}</b>
+          <b>lastest validate block time: </b>
           {Moment(this.props.status.last_mined_child_block_timestamp * 1000).fromNow()}
           {' | '}
           {Moment(this.props.status.last_mined_child_block_timestamp * 1000).format(

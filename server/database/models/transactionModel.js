@@ -6,14 +6,12 @@ function getTransactionsRate (rate) {
   }
 
   return new Promise((resolve, reject) => {
-    console.log(rate)
     db.query(
       `SELECT COUNT(*) FROM transactions LEFT JOIN blocks ON transactions.blknum = blocks.blknum 
        WHERE to_timestamp(blocks.timestamp) > now() - $1::interval`,
       [rate],
       (err, res) => {
         if (err) return reject(err)
-        console.log(res.rows[0])
         return resolve({
           success: true,
           data: res.rows[0]
