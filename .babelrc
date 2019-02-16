@@ -5,17 +5,8 @@
       "plugins": ["babel-plugin-styled-components"]
     },
     "production": {
-      "presets": [
-        "next/babel",
-        [
-          "@babel/env",
-          {
-            "targets": {
-              "node": "current"
-            }
-          }
-        ]
-      ]
+      "presets": [ "next/babel" ],
+      "plugins": ["babel-plugin-styled-components"]
     }
   }
 }
