@@ -240,7 +240,7 @@ export default class HomePage extends Component {
           </div>
         </Blocks>
         <StatusContainer>
-          <b>lastest validate block time: </b>
+          <b>lastest validated block: </b>
           {Moment(this.props.status.last_mined_child_block_timestamp * 1000).fromNow()}
           {' | '}
           {Moment(this.props.status.last_mined_child_block_timestamp * 1000).format(
