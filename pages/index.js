@@ -157,6 +157,7 @@ export default class HomePage extends Component {
     this.state = {
       txs: this.props.txs,
       txError: this.props.txError,
+      status: this.props.status,
       rateDay: this.props.rateDay,
       rateMin: this.props.rateMin,
       rateMonth: this.props.rateMonth
@@ -182,6 +183,11 @@ export default class HomePage extends Component {
       })
     }, 5000)
   }
+
+  componentDidCatch () {
+    return 'Something went wrong.'
+  }
+
   componentWillUnmount = () => {
     clearInterval(this.intervalLoadTransaction)
   }
