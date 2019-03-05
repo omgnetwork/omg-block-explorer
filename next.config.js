@@ -39,9 +39,6 @@ module.exports = compose(
     })
     config.plugins.push(new FriendlyErrorsWebpackPlugin({ clearConsole: false }))
     return config
-  },
-  generateBuildId: async () => {
-    return 'a-unique-build-id-hot-fix-works-for-now'
   }
 })
 
