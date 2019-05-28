@@ -38,7 +38,8 @@ function formatTransaction (tx) {
       outputs: formatInputsOutputs(tx.outputs),
       txblknum: tx.block.blknum,
       eth_height: tx.block.eth_height,
-      timestamp: Math.round(tx.block.timestamp * 1000)
+      timestamp: Math.round(tx.block.timestamp * 1000),
+      metadata: tx.metadata
     }
   }
   return tx

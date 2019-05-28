@@ -129,6 +129,10 @@ const Error = styled.div`
   right: 0;
   transform: translateY(-50%);
 `
+const MetadataContainer = styled.div`
+  padding: 30px;
+  word-break: break-all;
+`
 const columns = [
   {
     key: 'address',
@@ -205,6 +209,10 @@ export default class transaction extends Component {
               />
             </div>
           </CardContent>
+          <MetadataContainer>
+            <h4>Metadata</h4>
+            <div>{this.props.tx.metadata}</div>
+          </MetadataContainer>
         </div>
       </Card>
     )
@@ -260,6 +268,7 @@ export default class transaction extends Component {
   }
 
   render () {
+    console.log(this.props)
     return (
       <Container>
         {this.props.success ? (
