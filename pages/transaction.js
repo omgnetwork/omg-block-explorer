@@ -209,6 +209,12 @@ export default class transaction extends Component {
               />
             </div>
           </CardContent>
+          <CardContent>
+            <div>
+              <h4>Fees</h4>
+              <div>{this.calculateFee()}</div>
+            </div>
+          </CardContent>
           <MetadataContainer>
             <h4>Metadata</h4>
             <div>{this.props.tx.metadata}</div>
@@ -217,6 +223,13 @@ export default class transaction extends Component {
       </Card>
     )
   }
+
+  calculateFee () {
+    const inputSum = this.props.tx.inputs.reduce((prev, curr) => prev + curr.amount, 0)
+    const outputSum = this.props.tx.outputs.reduce((prev, curr) => prev + curr.amount, 0)
+    return inputSum - outputSum
+  }
+
   renderTransactionHeader () {
     return (
       <TopContainer>
