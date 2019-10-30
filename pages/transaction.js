@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { uniq, map } from 'lodash'
 import Card, { CardHeader } from '../components/Card'
 import Tag from '../components/Tag'
 import Icon from '../components/Icon'
@@ -212,7 +213,7 @@ export default class transaction extends Component {
           <CardContent>
             <div>
               <h4>Fees</h4>
-              <div>{this.calculateFee()}</div>
+              <div>{this.calculateFees()}</div>
             </div>
           </CardContent>
           <MetadataContainer>
@@ -224,10 +225,34 @@ export default class transaction extends Component {
     )
   }
 
-  calculateFee () {
-    const inputSum = this.props.tx.inputs.reduce((prev, curr) => prev + curr.amount, 0)
-    const outputSum = this.props.tx.outputs.reduce((prev, curr) => prev + curr.amount, 0)
-    return inputSum - outputSum
+  calculateFees () {
+    const currencies = uniq(this.props.tx.inputs.map(i => i.currency))
+
+    let fees = {}
+    currencies.map(currency => {
+      const inputMatches = this.props.tx.inputs.filter(i => i.currency === currency)
+      const outputMatches = this.props.tx.outputs.filter(i => i.currency === currency)
+
+      const inputSum = inputMatches.reduce((prev, curr) => prev + curr.amount, 0)
+      const outputSum = outputMatches.reduce((prev, curr) => prev + curr.amount, 0)
+      fees[currency] = inputSum - outputSum
+    })
+
+    if (Object.keys(fees).length === 1) {
+      return fees[Object.keys(fees)[0]]
+    }
+
+    return (
+      <>
+        {map(fees, (amount, token) => {
+          return (
+            <div key={token}>
+              {token} : {amount}
+            </div>
+          )
+        })}
+      </>
+    )
   }
 
   renderTransactionHeader () {
