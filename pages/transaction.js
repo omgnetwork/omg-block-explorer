@@ -230,12 +230,15 @@ export default class transaction extends Component {
 
     let fees = {}
     currencies.map(currency => {
-      const inputMatches = this.props.tx.inputs.filter(i => i.currency === currency)
-      const outputMatches = this.props.tx.outputs.filter(i => i.currency === currency)
+      const inputs = this.props.tx.inputs
+        .filter(i => i.currency === currency)
+        .reduce((prev, curr) => prev + curr.amount, 0)
 
-      const inputSum = inputMatches.reduce((prev, curr) => prev + curr.amount, 0)
-      const outputSum = outputMatches.reduce((prev, curr) => prev + curr.amount, 0)
-      fees[currency] = inputSum - outputSum
+      const outputs = this.props.tx.outputs
+        .filter(i => i.currency === currency)
+        .reduce((prev, curr) => prev + curr.amount, 0)
+
+      fees[currency] = inputs - outputs
     })
 
     if (Object.keys(fees).length === 1) {
