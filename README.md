@@ -1,3 +1,6 @@
+####
+# OBSELETE! Please go to https://github.com/omisego/blockexplorer
+####
 
 # omg-block-explorer
 
