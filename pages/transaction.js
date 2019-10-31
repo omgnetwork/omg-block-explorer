@@ -315,7 +315,6 @@ export default class transaction extends Component {
   }
 
   render () {
-    console.log(this.props)
     return (
       <Container>
         {this.props.success ? (
