@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { uniq, map } from 'lodash'
 import Card, { CardHeader } from '../components/Card'
 import Tag from '../components/Tag'
 import Icon from '../components/Icon'
@@ -10,6 +11,8 @@ import { truncateId } from '../utils/truncate'
 import { getTransactionById } from '../services/transactionService'
 import Moment from 'moment'
 import getConfig from 'next/config'
+import numberToBN from 'number-to-bn'
+
 const { publicRuntimeConfig } = getConfig()
 const { ETHERSCAN_URL } = publicRuntimeConfig
 const Container = styled.div`
@@ -209,6 +212,12 @@ export default class transaction extends Component {
               />
             </div>
           </CardContent>
+          <CardContent>
+            <div>
+              <h4>Fees</h4>
+              <div>{this.calculateFees()}</div>
+            </div>
+          </CardContent>
           <MetadataContainer>
             <h4>Metadata</h4>
             <div>{this.props.tx.metadata}</div>
@@ -217,6 +226,44 @@ export default class transaction extends Component {
       </Card>
     )
   }
+
+  calculateFees () {
+    const currencies = uniq(this.props.tx.inputs.map(i => i.currency))
+
+    let fees = {}
+    currencies.map(currency => {
+      const inputs = this.props.tx.inputs
+        .filter(i => i.currency === currency)
+        .reduce((prev, curr) => {
+          return prev.iadd(numberToBN(curr.amount))
+        }, numberToBN(0))
+
+      const outputs = this.props.tx.outputs
+        .filter(i => i.currency === currency)
+        .reduce((prev, curr) => {
+          return prev.iadd(numberToBN(curr.amount))
+        }, numberToBN(0))
+
+      fees[currency] = inputs.sub(outputs).toString()
+    })
+
+    if (Object.keys(fees).length === 1) {
+      return fees[Object.keys(fees)[0]].toString()
+    }
+
+    return (
+      <>
+        {map(fees, (amount, token) => {
+          return (
+            <div key={token}>
+              {token} : {amount}
+            </div>
+          )
+        })}
+      </>
+    )
+  }
+
   renderTransactionHeader () {
     return (
       <TopContainer>
@@ -268,7 +315,6 @@ export default class transaction extends Component {
   }
 
   render () {
-    console.log(this.props)
     return (
       <Container>
         {this.props.success ? (
